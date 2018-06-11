@@ -1,0 +1,1640 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Desenvolvimento web com Javascript</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<link href="css/fontawesome-all.min.css" rel="stylesheet">
+		<link href="css/fa-brands.min.css" rel="stylesheet">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h2>Desenvolvimento Web com JavaScript</h2>
+					<h4>Uma abordagem <i class="fab fa-node fa-lg"></i></h4>
+					
+					<p>
+						Especialização em: DESENVOLVIMENTO WEB, CLOUD E DISPOSITIVOS MÓVEIS
+						<br/><small>Professor: <a href="http://lattes.cnpq.br/3629415473382582">Luiz Pedro Petroski</a></small>
+					</p>
+					<img class="stretch" src="images/logo_unoesc.jpg"/>
+				</section>
+
+				<section>
+					<section>
+						<h2>Formação  <i class="fa fa-graduation-cap fa-lg"></i></h2>
+						<p>
+							<ul>
+								<li>Graduação: Engenharia de Computação (UEPG)</li>
+								<li>Pós-Graduação: MBA em Gestão de TI (Faculdade Sant'ana)</li>
+								<li>Mestrado: Computação Aplicada (UEPG)</li>
+							</ul>
+							
+						</p>
+					</section>
+					<section>
+						<h2>Profissional <i class="fa fa-id-card fa-lg"></i></h2>
+						<p>
+							<ul>
+								<li>Professor (Fateb)</li>
+								<li>Professor Ensino técnico</li>
+								<li>Gestor de TI no NUTE@D (UEPG)</li>
+								<li>Fundador e CIO da PiSigma (Eventos científicos e Educação a distância)</li>
+							</ul>
+							
+						</p>
+					</section>
+				</section>
+				<section data-transition="zoom">
+					<h2>Ementa da Disciplina <i class="fa fa-clipboard-list fa-lg"></i></h2>
+					<p>
+						<ul>
+							<li class="fragment">Introdução ao NodeJS</li>
+							<li class="fragment">Repositório Online NPM</li>
+							<li class="fragment">Módulos</li>
+							<li class="fragment">Servidores</li>
+							<li class="fragment">I/O Síncrono</li>
+							<li class="fragment">Express</li>
+							<li class="fragment">Mongoose</li>
+						</ul>
+					</p>
+				</section>
+				<section>
+					<h2>Avaliação:</h2>
+					<table>
+						<tr>
+							<td>Participação nas aulas 11 e 12/05</td>
+							<td>1,0 ponto</td>
+						</tr>
+						<tr>
+							<td>Participação nas aulas 25 e 26/05</td>
+							<td>1,0 ponto</td>
+						</tr>
+						<tr>
+							<td>Atividade LearnNode</td>
+							<td>3,0 pontos</td>
+						</tr>
+						<tr>
+							<td>Projeto Final</td>
+							<td>5,0 pontos</td>
+						</tr>
+					</table>
+				</section>
+				<section>
+					<h2>Node <i class=" fa fa-heart fa-lg"></i> JavaScript</h2>
+					<p>
+						O Node ampliou quase Universalmente o uso da linguagem JavaScript, e possibilitou explorar os seus recursos de forma mais efetiva
+					</p>
+				</section>
+				<section>
+					<h2>A linguagem mais Popular!!! <i class="fa fa-trophy fa-lg"></i></h2>
+					<ol>
+						<li>JavaScript</li>
+						<li>Java</li>
+						<li>Python</li>
+						<li>PHP</li>
+						<li>C#</li>
+					</ol>
+				</section>
+				<section>
+					<img class="stretch" src="images/lang.rank_.617.wm_.png"/>
+				</section>
+				<section>
+					<h2><i class="fa fa-star fa-lg"></i>Qual a razão dessa Popularidade?</h2>
+					<p>
+						<ul>
+						<li class="fragment">Expansão da WEB</li>
+						<li class="fragment">Redes Móveis</li>
+						<li class="fragment">Tecnologia acessível</li>
+						<li class="fragment">Poder de processamento e recursos no lado do cliente:
+							<br/><b><i class="fab fa-html5 fa-md"></i> HTML5:</b> Geolocalização, storage, notification, web socket...
+							<br/>Qual a linguagem para manipular essas APIs?
+						</li>
+					</ul>
+					</p>
+				</section>
+				<section>
+					<h2>Browsers</h2>
+					<img class="stretch" src="images/six-web-browsers.png"/>
+				</section>
+				<section>
+					<section>
+						<h2>Amor <i class="fa fa-thumbs-up fa-lg"></i> / Ódio <i class="fa fa-thumbs-down fa-lg"></i></h2>
+						<p>Alguém aqui odeia JavaScript?</p>
+						<p class="fragment">Boa parte dos problemas tem relação com a DOM </p>
+						<p class="fragment">Problemas de compatibilidade</p>
+						<p class="fragment">Falta de padronização e briga dos grandes players do mercado</p>
+					</section>
+					<section>
+						<h2>DOM </h2>
+						<p>
+							Ou Document Object Model, foi padronizado pela W3C em 1998 para representar documentos
+							escritos em HTML, XHTML e XML.
+						</p>
+						<p>
+							Por meio dessa API, é possível acessar e manipular qualquer informação do documento
+						</p>
+						
+					</section>
+					<section>
+						<h2>Você costuma ler o manual de instruções?</h2>
+						<p>
+							<i class="fa fa-book fa-5x"></i>
+						</p>
+					</section>
+					<section>
+						<h2>Exemplo:</h2>
+						<p>Como você usa o seu formo Micro-Ondas?</p>
+						<img class="stretch" src="images/micro-ondas.jpg"/>
+					</section>
+					<section>
+							<blockquote cite="#">
+								&ldquo;A linguagem JavaScript é a única que as pessoas acham que não precisam aprender
+								antes de começar a utilizar.&rdquo;
+							</blockquote>
+							<p>(Douglas Crockford)</p>
+							<aside class="notes">
+								Isso é particularmente muito perigoso, pois javascript apesar de ser uma linguagem muito simples e funcional, ela possiu diferenças
+								substanciais, com por exemplo a orientação à objetos baseada em prototipos.
+							</aside>
+					</section>
+				</section>
+				<section>
+					<h2>Revisão JavaScript</h2>
+					<p><a href="#/34">Pular Revião Javascript</a></p>
+				</section>
+				<section>
+					<section>
+						<h2>Origens</h2>
+						<p>Foi inspirada pela linguagem <b>HiperTalk</b></p>
+						<p>Desnvolvida pela Apple para a plataforma <b>Hiper Card</b></p>
+						<p>Liguagem Simples e amigável</p>
+					</section>
+					<section>
+						<img class="stretch" src="images/netscape.png"/>
+						<p>Idéia de implementar um conceito semelhante no browser</p>
+						<p>Contratou o Brendan Eich</p>
+						<p>Ele utilizou como base as linguagens Java, Scheme, Self e algunas influencias de Perl</p>
+					</section>
+					<section>
+						<h2>Nascimento do JavaScript</h2>
+						<p>Surgiu no Netscape Navigator 2.0 beta</p>
+						<p>Gerra dos Browsers</p>
+						<p>Junção com a Sun Microsystems e foi criado o JavaScript</p>
+						<p>Microsoft para nao ficar para trás criou o JScript</p>
+					</section>
+					<section>
+						<h2>Para encurtar a história...</h2>
+						<p>Para não perder para a gigante Microsoft a netscape busca padronizar (W3C e ISO)</p>
+						<p>E em 1997 Junto a ECMA Internacional foi registrado padronizado a linguagem</p>
+						<p>O nome correto é <b>ECMAScript</b></p>
+					</section>
+
+				</section>
+				<section>
+					<h2>Características</h2>
+					<ul>
+						<li>Interpretada</li>
+						<li>Orientação a objetos baseada em protótipos (não possui classes)</li>
+						<li>Tipagem fraca</li>
+						<li>Funções de primeira classe</li>
+						<li>Atualmente está na versão 8</li>
+					</ul>
+
+				</section>
+				<section>
+					<h2>Declaração de variáveis</h2>
+					<p>As variáveis devem ser declaradas pela palavra reservada <b>var</b> seguida do identificador</p>
+					
+					<ul>
+						<li>Deve começar por letra, $ ou _</li>
+						<li>Após a primeira letra pode conter números</li>
+						<li>Por convenção, começa com letra minúscula e usa camelCase</li>
+						<li>case-sensitive</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Exemplos</h2>
+					<pre>
+						<code class="line-numbers" data-trim >
+							var curso="DESENVOLVIMENTO WEB COM JAVASCRIPT";
+							var notas=[80, 90, 70];
+							var $scopo = {title: "JavaScript", version: "6"};
+							var _nome = "Luiz";
+							var codigoSecreto = 8732678632;
+							var a=40, b=9, c=4;
+							var teste;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Number</h2>
+					<ul>
+						<li>Não tem int, double, long, é todo number</li>
+						<li>IEEE-754 (Standart for Floating-Point)</li>
+						<li>binary64 ou Double precision</li>
+						<li>Excecções!</li>
+						<li>Math API</li>
+					</ul>
+					<aside class="notes">
+						0.1+0.3
+						Foi proposto o IEEE 754R - problema de performance 5.. 6 vezes mais DESENVOLVIMENTO
+						3/0
+						"Javascript" * 10 = NaN
+					</aside>
+				</section>
+				<section>
+					<h2>String</h2>
+					<p>Sequencia de 0 ou mais caracteres</p>
+					<p>Strings são imutáveis</p>
+					<p>Podem ser declaradas com aspas simples ou dupas</p>
+					<p>string API</p>
+					<aside class='notes'>
+						var nome = 'Desenvolvimento web';
+						nome.charAt(2);
+						nome.charCodeAt(0);
+						nome.concat("!");
+						nome.indexOf('o');
+						nome.replace('web', 'de sistemas');
+						nome.split(' ');
+					</aside>
+				</section>
+				<section>
+					<h2>boolean</h2>
+					<p>Pode assumir o valor true ou false</p>
+					<p>Cuidado com os valores truty e falsy</p>
+					<p>
+						<table>
+							<tr>
+								<td>!!0</td><td>!!NaN</td><td>!!''</td><td>!!false</td><td>!!null</td><td>!!undefined</td>
+							</tr>
+						</table></p>
+					<p>todos os demais são truty por padrão</p>
+				</section>
+				<section>
+					<h2>Diferenças entre <b>undefined</b> e <b>null</b></h2>
+					<p>
+						O tipo undefined é retornado caso uma propriedade de um objeto seja consultada e não exista
+					</p>
+					<p>O tipo null indica a ausência de valor em uma determinada propriedade já existente</p>
+					<aside class='notes'>
+						var pessoa = {};
+						pessoa
+						pessoa.idade
+						pessoa.nome="Luiz Pedro Petroski";
+						pessoa.idade=30;
+						pessoa
+						pessoa.nome pessoa.idade pessoa.endereco
+						for(var proproedade in pessoa){
+							console.log(propriedade);
+						}
+						pessoa.idade=undefined;???
+					</aside>
+				</section>
+				<section>
+					<h2>Object</h2>
+					<p>
+						Objeto é uma coleção dinâmica de <b>chaves e valores</b> de qualquer tipo de dado
+					</p>
+					<p>
+						É possível <b>adicionar</b> ou <b>remover</b> propriedades a qualquer momento
+					</p>
+					<aside class="notes">
+						Não possui construtores, nao tem classe, nao tem metodo<br/>
+						quando uma chave assume uma função ela assume o comportamento de um metodo
+					</aside>
+				</section>
+				<section>
+					<section>
+						<h2>Exemplo</h2>
+						<p>
+							<pre>
+								<code class="line-numbers" data-trim >
+									var pessoa = {};
+								</code>
+							</pre>
+						</p>
+					</section>
+					<section>
+						<h2>Exemplo</h2>
+						<p>
+							<pre>
+								<code class="line-numbers" data-trim >
+									var pessoa = {
+										nome: "João",
+										idade: 20,
+									};
+								</code>
+							</pre>
+						</p>
+					</section>
+					<section>
+							<h2>Exemplo</h2>
+							<p>
+								<pre>
+									<code class="line-numbers" data-trim >
+										var pessoa = {
+											nome: "João",
+											idade: 20,
+											telefone: null,
+										};
+									</code>
+								</pre>
+							</p>
+					</section>
+					<section>
+						<h2>Exemplo</h2>
+						<p>
+							<pre>
+								<code class="line-numbers" data-trim >
+									var pessoa = {
+										nome: "João",
+										idade: 20,
+										telefone: null,
+										endereco: {
+											logradouro: "Rua dos Bobos",
+											numero:0,
+											bairro: "Centro"
+										}
+									};
+								</code>
+							</pre>
+						</p>
+					</section>
+					<section>
+						<h2>Exemplo</h2>
+						<p>
+							<pre>
+								<code class="line-numbers" data-trim >
+									var pessoa = {};
+									pessoa.nome="João";
+									pessoa["nome"] = 'João';
+									pessoa.endereco.bairro="Centro";
+									pessoa["endereco"]["bairro"]="Centro";
+									pessoa.endereco["logradouro"]="Rua dos bobos";
+									pessoa.cor dos olhos = "Azul";
+									pessoa["cor dos olhos"] = "Azul";
+								</code>
+							</pre>
+						</p>
+					</section>
+					<section>
+						<h2>Exemplo</h2>
+						<p>
+							<pre>
+								<code class="line-numbers" data-trim >
+									delete pessoa.idade;
+									var pessoa = new Object();
+									var pessoa = Object.create(...);
+								</code>
+							</pre>
+						</p>
+					</section>
+				</section>
+				<section>
+					<h2>A linguagem JavaScript nao tem! <i class="fa fa-ban fa-lg"></i></h2>
+					<ul>
+						<li>Classe</li>
+						<li>Construtor</li>
+						<li>Método</li>
+						<li>Módulo</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Mas tem Função!!! <i class="fa fa-bolt fa-lg"></i></h2>
+					<p>
+						Uma função é um objeto que contém um bloco de código executável.
+					</p>
+					<p>
+						O bloco é isolado!!
+					</p>
+					<p>
+						Função de primeira classe: Pode ser atribuída a uma variável, passada como parâmetro ou retornada por outra função.
+					</p>
+				</section>
+				<section>
+					<h2>Function Declaration</h2>
+					<p>
+							<pre>
+									<code class="line-numbers" data-trim >
+										function soma(a, b){
+											return a+b;
+										}
+										soma(1, 3);
+									</code>
+								</pre>
+
+					</p>
+				</section>
+				<section>
+						<h2>Function Expression</h2>
+						<p>
+								<pre>
+										<code class="line-numbers" data-trim >
+											var soma = function(a, b){
+												return a+b;
+											}
+											soma(1, 3);
+										</code>
+									</pre>
+									<aside class="notes">
+										Função anônima (nao tem nome mas poderia ter)
+									</aside>
+	
+						</p>
+					</section>
+					<section>
+						<h2>Named Function Expression</h2>
+						<p>
+							<pre>
+								<code class="line-numbers" data-trim >
+									var soma = function soma(a, b){
+										return a+b;
+									}
+									soma(1, 3);
+								</code>
+							</pre>
+							<aside class="notes">
+								A diferença das duas, o nome da função vai ser útil em algumas situações (depuração, break point. loggin)
+								<br/>
+								console.log(soma); posso invocar ou não;
+								inverter a chamada da função chama antes
+								function declaration é carregada antes da interpretação
+							</aside>
+	
+						</p>
+					</section>
+					<section>
+							<section>
+								<h2>Formas de invocar uma função</h2>
+								<p>
+									<ul>
+										<li>Invocando diretamente</li>
+										<li>passado por parâmetro</li>
+										<li>Retornando uma função</li>
+										<li>Invocando função por meio de um objeto</li>
+										<li>call e apply</li>
+									</ul>
+								</p>
+								
+							</section>
+							<section>
+								<h2>Invocando diretamente</h2>
+								<pre>
+									<code class="line-numbers" data-trim >
+										var soma = function soma(a, b){
+											return a+b;
+										}
+										soma(1, 3);
+									</code>
+								</pre>
+							</section>
+							<section>
+								<h2>Passando por parâmetro (lambda)</h2>
+								<pre>
+									<code class="line-numbers" data-trim >
+										var produto = {nome: 'Sapato', preco: 150};
+										var formulaImpostoA=function (preco){return preco*0,1;};
+										var calculaPreco = function(produto, formulaImposto){
+											return produto.preco+formulaImposto(produto.preco);
+										}
+									</code>
+								</pre>
+							</section>
+							<section>
+								<h2>Retorno de uma função</h2>
+								<pre>
+									<code class="line-numbers" data-trim >
+										var var helloworld = function (){
+											return function(){
+												return "Hello World";
+											}
+										}
+										console.log(helloworld);
+										console.log(helloworld());
+										console.log(helloworld()());
+									</code>
+								</pre>
+							</section>
+							<section>
+								<h2>Dentro do objeto</h2>
+								<pre>
+									<code class="line-numbers" data-trim >
+										var pessoa={
+											nome: "João",
+											idade: 20,
+											getIdade: function(){
+												return this.idade;
+											}
+										}
+										pessoa.getIdade();
+									</code>
+								</pre>
+							</section>
+							<section>
+								<h2>Dentro do objeto</h2>
+								<pre>
+									<code class="line-numbers" data-trim >
+										var getIdade = function(){
+											return this.idade;
+										}
+										var pessoa={
+											nome: "João",
+											idade: 20,
+											getIdade: getIdade
+										}
+										getIdade();
+										pessoa.getIdade();
+									</code>
+								</pre>
+							</section>
+							<section>
+								<h2>Call e Apply</h2>
+								<p>
+									Toda Funçao possui os métodos call() e apply()
+								</p>
+								<p>
+									Utilizados para indicar qual escopo a função deve ser executada
+								</p>
+								<p>
+									funcao.call(escopo, paramentro1, parametro2);
+									funcao.apply(escopo, parametros);
+								</p>
+							</section>
+							<section>
+								<h2>Call e Apply</h2>
+								<pre>
+									<code class="line-numbers" data-trim >
+										var getIdade = function(extra){
+											return this.idade + extra;
+										}
+										var pessoa={
+											nome: "João",
+											idade: 20,
+											getIdade: getIdade
+										}
+										getIdade();
+										pessoa.getIdade();
+										getIdade.call(pessoa, 3);
+										getIdade.apply(pessoa, [3]);
+									</code>
+								</pre>
+								<aside class="notes">
+									arguments
+								</aside>
+							</section>
+							<section>
+								<h2>Funções Construtoras vs Funções Fábrica</h2>
+								<p>
+									Fábrica
+										<pre>
+												<code class="line-numbers" data-trim >
+													var criarPessoa(nome, idade){
+														return {
+															nome: nome,
+															idade: idade
+														};
+													};
+													console.log(criarPessoa("Pedro", 20));
+												</code>
+											</pre>
+								</p>
+							</section>
+							<section>
+								<h2>Funções Construtoras vs Funções Fábrica</h2>
+								<p>
+									Construtoras
+										<pre>
+												<code class="line-numbers" data-trim >
+													var Pessoa = function (nome, idade){
+														this.nome=nome;
+														this.idade=idade;
+													};
+													console.log(new Pessoa("Pedro", 20));
+													var maria = {};
+													Pessoa.call(maria, "Maria", 20);
+													console.log(maria);
+												</code>
+											</pre>
+											<aside class="notes">
+												e se esquecer o operador new? this vai referenciar o escopo global e sobreescrever o nome e idade
+											</aside>
+								</p>
+							</section>
+							<section>
+								<h2>Closures</h2>
+								<p>
+									<pre>
+										<code class="line-numbers" data-trim >
+											var helloWorld = function (){
+												var message = "Hello world";
+												return function(){
+													return message;
+												};
+											};
+											var fnHello = helloWorld();
+											console.log(fnHello());
+										</code>
+									</pre>
+								</p>
+							</section>
+					</section>
+					<section>
+						<h2>Cuidado com o escopo global</h2>
+						<p>
+							<pre>
+								<code class="line-numbers" data-trim >
+									var counter = 0;
+									 var add = function(){
+										 return ++counter;
+									 };
+									 console.log(add());
+									 console.log(add());
+									 console.log(add());
+
+									 var itens = [];
+									 var add = function(item){
+										 itens.push(item);
+										 return itens;
+									 };
+									 console.log(add('A'));
+									 console.log(add('B'));
+									 console.log(add('C'));
+								</code>
+							</pre>
+						</p>
+					</section>
+					<section>
+						<h2>Desafio!</h2>
+						<p>Como evitar a situação anterior?</p>
+						<p>dica: pode utilizar objetos</p>
+					</section>
+					<section>
+						<h2>Solução</h2>
+						<p>
+							<pre>
+								<code class="line-numbers" data-trim >
+									var counter = {
+										value:0,
+										add: function(){
+											return ++this.value;
+										}
+									};
+									console.log(counter.add());
+									console.log(counter.add());
+									var itens = {
+										value:[],
+										add: function(item){
+											this.value.push(item);
+											return this.value;
+										}
+									};
+									console.log(itens.add('A'));
+									console.log(itens.add('B'));
+									console.log(itens.add('C'));
+									console.log(counter.add());
+								</code>
+							</pre>
+						</p>
+					</section>
+					<section>
+						<h2>Problema: nao tem encapsulamento</h2>
+						<p>
+							<pre>
+								<code class="line-numbers" data-trim >
+									var counter = {
+										value:0,
+										add: function(){
+											return ++this.value;
+										}
+									};
+									console.log(counter.add());
+									console.log(counter.add());
+									counter.value=undefined;
+									console.log(counter.add());
+								</code>
+							</pre>
+						</p>
+					</section>
+
+					<section>
+						<h2>Lembram da Clousure? Factory Function</h2>
+						<p>
+							<pre>
+								<code class="line-numbers" data-trim >
+									var createCounter = function(){
+										value=0;
+										return {
+											add: function(){
+												return ++value;
+											}
+										};
+									};
+									var counter = createCounter();
+									console.log(counter.add());
+									console.log(counter.add());
+									counter.value=undefined;
+									console.log(counter.add());
+								</code>
+							</pre>
+						</p>
+					</section>
+					<section>
+						<h2>Array</h2>
+						<p>
+							São apenas objetos especiais, que oferece meios para acessar e manipular suas propriedades por meio de indices.
+						</p>
+
+					</section>
+					<section>
+							<h2>Criando Array</h2>
+							<pre>
+									<code class="line-numbers" data-trim >
+										var carros = [];
+										carros[0]='Gol';
+										carros[1]='Palio';
+										//ou
+										var carros['Gol', 'Palio', 'Corsa'];
+										//ou
+										var carros = new Array();
+										var carros = new Array('Gol', 'Palio', 'Corsa');
+										var carros = new Array(10);
+									</code>
+								</pre>
+								<aside class="notes">
+									.valueOf() .toString() .length <br/>
+									.push('Corsa'); .pop(); .unshift('Corsa'); .shift(); <br/>
+									.indexOf('Corsa'); .splice(pos, 1); .splice(pos, 1 ou 0, 'celta'); <br>
+									.filter() .map(); .every(); .some(); .reduce();
+								</aside>
+	
+						</section>
+				<section>
+					<h2>E o NODE <i class="fa fa-question-circle fa-lg"></i></h2>
+					<p class="fragment">A linguagem ganhou ainda mais força com o Node</p>
+					<p class="fragment">Possibilidade de interpretação do JavaScript no lado do servidor</p>
+					<p class="fragment">Express</p>
+					<p class="fragment">ElectronJS</p>
+					
+				</section>
+				<section>
+					<h2>Mas então o NODE nasceu para executar o JS no servidor?</h2>
+					<p class="fragment">Não</p>
+					<p class="fragment">Rayan Dahl</p>
+					<p class="fragment">Matemático - Programação de sites (2006)</p>
+					<p class="fragment"><i class="fab fa-flickr fa-lg"></i> Flickr</p>
+				</section>
+				<section>
+					<h2>Como trabalhar com IO?</h2>
+					
+				</section>
+				<section>
+					<img class="stretch" src="images/multi_thread.png"/>
+					<aside class="notes">
+						A forma como as plataformas lidavam com io era errada.
+						normalmente tem threads que ficam aguardando. E quando em espera ela acaba gastando a maior parte do tempo dormindo.
+						Alocando recursos desnecessários.
+					</aside>
+				</section>
+				<section>
+					<h2>Como isso poderia ser otimizado?</h2>
+				</section>
+				<section>
+					<img class="stretch" src="images/node_poll.png"/>
+					<aside class="notes">
+						Proposta: Event Loop (principal componente)
+						Single thread -> delegar para outro componente (Poll de thread), inicialmente 4 threads
+					</aside>
+				</section>
+				<section>
+					<h2>Arquitetura do Node</h2>
+					<img class="stretch" src="images/arquitetura_node.jpeg"/>
+				</section>
+				<section>
+					<h2>Web Server orientado a eventos</h2>
+					<img class="stretch" src="images/apache_node_lighthttp.jpg"/>
+				</section>
+				<section>
+					<h2>Vamos ver isso na prática</h2>
+					<p>Vamos utilizar um algoritmo que force o uso de CPU</p>
+					<p>vamos notar o comportamento do Event Loop</p>
+					<p><b>primes-single-thread-server.js</b></p>
+				</section>
+				<section>
+					<h2>Single thread?</h2>
+					<p>Dessa forma, como é possível escalar e
+						atender vários clientes ao mesmo tempo?</p>
+						<p class="fragment">Na verdade, existe um thread pool
+							responsável pelo processamento de I/O</p>
+						<p class="fragment">files.js</p>
+				</section>
+				<section>
+					<h2>Mas e a escalabilidade no Event Loop?</h2>
+					<p class="fragment">Pode haver balanceador de carga</p>
+					<p class="fragment">Mas podemos escalar via clusters (várias instancias!)</p>
+					<p class="fragment">primes-multi-thread.js</p>
+				</section>
+				<section>
+					<h2>Biblioteca libuv</h2>
+					<img class="stretch" src="images/libuv.png"/>
+				</section>
+				<section>
+					<h2>libuv</h2>
+					<p>A libuv é uma biblioteca multi-plataforma
+						responsável pela realização de <b>I/O assíncrono</b>,
+						fornecendo a implementação do <b>event loop</b> e do
+						thread pool, juntamente com o suporte a TCP e
+						UDP socket, resolução de DNS, sistema de
+						arquivos, processos entre outras.</p>
+				</section>
+				<section>
+					<h2>Mas e porque JavaScript?</h2>
+					<p>As linguagems C, C++, Lua, haskel possuem muitas bibliotecas sincronas</p>
+					<p>JS tem a sintaxe amigável e tudo gira em torno de funções</p>
+					<p>Os navegadores já usavam JS e assincrono (briga dos navegadores)</p>
+				</section>
+				<section>
+					<img class="stretch" src="images/v8.png"/>
+				</section>
+				<section>
+					<h2>Será que o Node tem performance?</h2>
+					<p>Vamos fazer um teste bem simples, um comparativo entre java e Javascript</p>
+					<p>Primes.java vs primes.js</p>
+				</section>
+				<section>
+					<h2><i class="fab fa-node fa-lg"></i></h2>
+					<p>O Node.js uma plataforma de código aberto para
+						a execução de JavaScript no servidor. É composto
+						pela junção do interpretador V8, do Google, com
+						a biblioteca libuv e por um conjunto de módulos.</p>
+					
+				</section>
+				<section>
+					<h2>Core modules</h2>
+					<ul>
+						<li>http</li>
+						<li>fs</li>
+						<li>stream</li>
+						<li>buffer</li>
+						<li>net</li>
+						<li>crypto</li>
+						<li>... https://github.com/nodejs/node</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Quem financiou</h2>
+					<p>Joyent: Datacenter e cloud computing</p>
+					<p>Deu certo até certo ponto</p>
+					<p>A comunidade resolveu criar um fork</p>
+					<p>Surgiu o IO js</p>
+				</section>
+				<section>
+					<h2>O reencontro!</h2>
+					<p>Em 09/2015, com a saída da Joyent, io.js
+						v3.3 se juntou com o Node.js v0.12,
+						dando origem ao Node.js v4.0</p>
+				</section>
+				<section>
+					<h2>Quais empresas usam Node?</h2>
+					<p class="fragment">
+						<div class="col-sm-3">
+						<img class="stretch" height="100"  src="images/linkedin_logo_1.jpg"/>
+						<img class="stretch" height="100" src="images/netflix-logo.png"/>
+						<img class="stretch" height="100" src="images/ibm.png"/>
+						<img class="stretch" height="100" src="images/uber.jpg"/>
+						<img class="stretch" height="100" src="images/walmart-logo.gif"/>
+						<img class="stretch" height="100" src="images/paypal-topic.png"/>
+						<img class="stretch" height="100" src="images/dowjones_logo.jpg"/>
+					</p>
+				</section>
+				<section>
+					<h2>Cases destas grandes empresas</h2>
+					<ul>
+						<li><a href="http://venturebeat.com/2011/08/16/linkedin-node/" target="_blank">Linkedin - Entrevista com Kiran Prasada (Lider de Desenvolvimento)</a> </li>
+						<li><a href="https://www.youtube.com/watch?v=p74282nDMX8" target="_blank">Node.js at NetFlix (video - Inglês)</a></li>
+						<li><a href="https://www.youtube.com/watch?v=8is8iKlo8oQ" target="_blank">Node.js IBM (video - Inglês)</a></li>
+						<li><a href="https://www.youtube.com/watch?v=ElI5QtUISWM" target="_blank">Node.js at Uber (video - Inglês)</a></li>
+						<li><a href="https://www.youtube.com/watch?v=-00ImeLt9ec" target="_blank">Node.js at PayPal (video - Inglês)</a></li>
+					</ul>
+				</section>
+				<section>
+					<h2>Como Instalar</h2>
+					<p>https://nodejs.org/en/</p>
+					<p>Seguir as instruções e instalar a ultima versão LTS</p>
+				</section>
+				<section>
+					<h2>Verificar a instalação</h2>
+					<img class="stretch" src="images/nodev.png"/>
+				</section>
+				<section>
+					<h2>REPL (Read-Eval-Print-Loop)</h2>
+					<img class="stretch" src="images/repl.png"/>
+				</section>
+				<section>
+					<h2>Ou executa arquivos</h2>
+					<p>
+						<b>hello.js</b>
+						<pre>
+							<code class="line-numbers" data-trim >
+								console.log("Olá mundo!");
+							</code>
+						</pre>
+						Linha de comando
+						<pre>
+								<code class="line-numbers" data-trim >
+									$ node hello.js
+								</code>
+							</pre>
+					</p>
+				</section>
+				<section>
+					<h2>Suporte as versoes do ECMAScript</h2>
+					<p><a href="http://node.green/" target="_blank">http://node.green/</a></p>
+				</section>
+				<section>
+					<h2>NPM</h2>
+					<p>
+						Assim como o gems do Ruby ou o Maven do Java o Node possui o Node Package Manager
+					</p>
+					<p>
+						Simplifica o desenvolvimento e gestão de dependências
+					</p>
+				</section>
+				<section>
+					<h2>Exemplos de comandos npm</h2>
+					<pre>
+						<code class="line-numbers" data-trim >
+							$ npm init //cria o arquivo package.json
+							$ npm install nome_do_modulo //Instala um nódulo
+							$ npm install nome_do_modulo --save //Instala e salva no package.json
+							$ npm install nome_do_modulo -g //Instala global
+							$ npm remove nome_do_modulo //remove o pacote --save/g
+							$ npm update nome_do_modulo //atualiza o pacote
+						</code>
+					</pre>
+				</section>
+				<section>
+					<pre>
+						<code class="line-numbers" data-trim >
+								{
+									"name": "app-node",
+									"version": "1.2.3",
+									"description": "Exemplo de package.json Node",
+									"main": "index.js",
+									"scripts": {
+									  "test": "echo \"Error: no test specified\" && exit 1"
+									},
+									"keywords": [
+									  "exemplo",
+									  "node",
+									  "teste"
+									],
+									"author": "Luiz Pedro Petroski",
+									"license": "MIT",
+									"dependencies": {
+									  "robot-js": "^2.0.0"
+									}
+								  }
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Sistemas de Módulos do Node</h2>
+					<p>No Node.js, existe uma relação direta
+							entre um arquivo e um módulo</p>
+				</section>
+				<section>
+					<h2>As especificações de módulos foram baseadas no padrão CommonJS</h2>
+					<p><a href="http://wiki.commonjs.org/wiki/Modules/1.1" target="_blank">http://wiki.commonjs.org/wiki/Modules/1.1</a></p>
+					<img class="stretch" src="images/commonjs.png"/>
+				</section>
+				<section>
+					<h2>Require</h2>
+					<p>A função require é responsável por retornar
+							o que foi exportado de um outro módulo</p>
+				</section>
+				<section>
+					<h2>Por exemplo: Temos a seguinte função...</h2>
+					<pre>
+							<code class="line-numbers" data-trim >
+									var max = 10000;		
+									var generate = function()	{	
+										return	Math.floor(Math.random()	*	max);	
+									};	
+							</code>
+						</pre>
+				</section>
+				<section>
+					<h2>index.js</h2>
+					<pre>
+							<code class="line-numbers" data-trim >
+									var serialGenerator = require('./serialGenerator.js');	
+									console.log(serialGenerator);	
+							</code>
+						</pre>
+				</section>
+				<section>
+					<h2>Será que funciona?</h2>
+					<p>vamos testar?</p>
+					<p class="fragment">Tudo que está dentro de um módulo é privado</p>
+					<p class="fragment">O módulo precisa explicitar o que será exportado</p>
+				</section>
+				<section>
+					<section>
+						<h2>Corrigindo...</h2>
+						<pre>
+								<code class="line-numbers" data-trim >
+										var max = 10000;	
+										module.exports.generate = function()	{	
+											return	Math.floor(Math.random() * max);	
+										};
+								</code>
+							</pre>
+					</section>
+					<section>
+						<h2>Corrigindo...</h2>
+						<pre>
+								<code class="line-numbers" data-trim >
+										var max = 10000;	
+										exports.generate = function()	{	
+											return	Math.floor(Math.random() * max);	
+										};
+								</code>
+							</pre>
+					</section>
+					<section>
+						<h2>Corrigindo...</h2>
+						<pre>
+								<code class="line-numbers" data-trim >
+										var max = 10000;	
+										this.generate = function()	{	
+											return	Math.floor(Math.random() * max);	
+										};
+								</code>
+							</pre>
+					</section>
+				</section>
+				<section>
+					<h2>index.js</h2>
+					<pre>
+							<code class="line-numbers" data-trim >
+									var serialGenerator = require('./serialGenerator.js');	
+									console.log(serialGenerator());	
+							</code>
+						</pre>
+				</section>
+				<section>
+					<h2>Qual a diferença entre module.exports, exports e this?</h2>
+						
+						<pre>
+							<code class="line-numbers" data-trim >
+								console.log(module.exports === exports);	
+								console.log(module.exports === this);	
+								console.log(exports === this);
+							</code>
+						</pre>
+					
+							
+					
+					<p class="fragment">Todos apontam para a mesma referencia</p>
+				</section>
+				<section>
+					<h2>Cuidado!!</h2>
+					<p>Quem retorna de fato é o module exports</p>
+				</section>
+				<section>
+					<h2>Como o módulo é localizado?</h2>
+					<p>
+							Primeiro, o algoritmo de busca tenta
+							localizar um módulo core. Existem vários
+							como: net, http, url, fs, zlib, crypto,
+							events, stream, os, vm, util, entre outros. 
+					</p>
+				</section>
+				<section>
+					<section>
+						<h2><a href="https://nodejs.org/api/modules.html" target="_blank">Documentacao sobre require</a></h2>
+						<img class="stretch" src="images/load_modules.png"/>
+					</section>
+					<section>
+						<p>Se o nome do módulo iniciar com '/', '../'
+								ou './', o algoritmo de busca irá localizar o
+								módulo por meio do caminho absoluto no
+								sistema de arquivos.</p>
+					</section>
+					<section>
+						<p>Terminar o nome com '.js' é opcional, o
+								algoritmo de busca irá tentar colocar o
+								'.js' no final caso não encontre o módulo.</p>
+					</section>
+					<section>
+						<p>
+								Se o módulo não começar com '/', '../' ou './' o
+								algoritmo de busca da função require vai procurar
+								dentro da pasta node_modules.
+						</p>
+					</section>
+				</section>
+				<section>
+					<h2>NPM</h2>
+					<p>
+							Ao utilizar o NPM, os módulos instalados
+							são armazenados na pasta node_modules
+					</p>
+				</section>
+				<section>
+					<section>
+						<h2>Outras formas de usar o export</h2>
+						<pre>
+								<code class="line-numbers" data-trim >
+										var max = 10000;	
+										var generate = function()	{	
+											return	Math.floor(Math.random() * max);	
+										};
+								</code>
+							</pre>
+					</section>
+					<section>
+						<h2>Por meio de um objeto <i class="fa fa-thumbs-up fa-lg"></i></h2>
+						<pre>
+								<code class="line-numbers" data-trim >
+										var max = 10000;	
+										module.exports.generate = function()	{	
+											return	Math.floor(Math.random() * max);	
+										};
+								</code>
+							</pre>
+					</section>
+					<section>
+						<h2>Por meio de um objeto <i class="fa fa-thumbs-up fa-lg"></i></h2>
+						<pre>
+								<code class="line-numbers" data-trim >
+										var max = 10000;	
+										exports.generate = function()	{	
+											return	Math.floor(Math.random() * max);	
+										};
+								</code>
+							</pre>
+					</section>
+					<section>
+						<h2>Por meio de um objeto<i class="fa fa-thumbs-up fa-lg"></i></h2>
+						<pre>
+							<code class="line-numbers" data-trim >
+								var max = 10000;	
+								this.generate = function()	{	
+									return	Math.floor(Math.random() * max);	
+								};
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h2>Por meio de um objeto<i class="fa fa-thumbs-up fa-lg"></i></h2>
+						<pre>
+							<code class="line-numbers" data-trim >
+								var max = 10000;	
+								var generate = function()	{	
+									return	Math.floor(Math.random() * max);	
+								};
+								module.exports={
+									generate:generate
+								};
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h2>Por meio de um objeto<i class="fa fa-thumbs-down fa-lg"></i></h2>
+						<pre>
+							<code class="line-numbers" data-trim >
+								var max = 10000;	
+								var generate = function()	{	
+									return	Math.floor(Math.random() * max);	
+								};
+								exports={
+									generate:generate
+								};
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h2>Por meio de um objeto<i class="fa fa-thumbs-down fa-lg"></i></h2>
+						<pre>
+							<code class="line-numbers" data-trim >
+								var max = 10000;	
+								var generate = function()	{	
+									return	Math.floor(Math.random() * max);	
+								};
+								this={
+									generate:generate
+								};
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h2>Por meio de um objeto<i class="fa fa-thumbs-up fa-lg"></i></h2>
+						<pre>
+							<code class="line-numbers" data-trim >
+								var createSerialGenerator = Funcion(){
+									var max = 10000;	
+									var generate = function()	{	
+										return	Math.floor(Math.random() * max);	
+									};
+									return {
+										generate:generate
+									};
+								}
+								module.exports = createSerialGenerator();
+								
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h2>Por meio de um objeto<i class="fa fa-thumbs-up fa-lg"></i></h2>
+						<pre>
+							<code class="line-numbers" data-trim >
+								var SerialGenerator = Funcion(){
+									var max = 10000;	
+									this.generate = function()	{	
+										return	Math.floor(Math.random() * max);	
+									};
+								}
+								module.exports = new SerialGenerator();
+							</code>
+						</pre>
+					</section>
+				</section>
+				<section>
+					<h2>E se necessitar dois objetos do mesmo módulo?</h2>
+					<pre>
+						<code class="line-numbers" data-trim >
+								var	serialGeneratorA = require('./serialGenerator');	
+								var	serialGeneratorB = require('./serialGenerator');	
+								console.log(serialGeneratorA === serialGeneratorB);
+						</code>
+					</pre>
+					<p class="fragment">O objeto será o mesmo: Cache</p>
+				</section>
+				<section>
+					<h2>Por meio de um objeto<i class="fa fa-thumbs-up fa-lg"></i></h2>
+					<pre>
+						<code class="line-numbers" data-trim >
+							var createSerialGenerator = Funcion(){
+								var max = 10000;	
+								var generate = function()	{	
+									return	Math.floor(Math.random() * max);	
+								};
+								return{
+									generate: generate
+								}
+							}
+							module.exports = createSerialGenerator;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>index.js</h2>
+					<pre>
+							<code class="line-numbers" data-trim >
+									var createSerialGenerator = require('./serialGenerator.js');
+									var	serialGeneratorA = createSerialGenerator();
+									var serialGeneratorB = createSerialGenerator();
+									console.log(serialGeneratorA===serialGeneratorB);	
+							</code>
+						</pre>
+				</section>
+				<section>
+					<h2>Exercício de sala</h2>
+					<ul>
+						<li>Calcular o valor do IPVA de um carro</li>
+						<li>Utilizar dois arquivos de módulos, um para criar os objetos carros e outro para a fórmula do IPVA</li>
+						<li>O carro deve conter: Marca, modelo, preço, ano de fabricação e se é utilitário ou não</li>
+						<li>Carros com mais de 20 anos não pagam IPVA</li>
+						<li>Carros utilitários pagam uma alícota menor</li>
+					</ul>
+				</section>
+				<section>
+					<h2>variáveis globais</h2>
+					<pre>
+							<code class="line-numbers" data-trim >
+									var max = 10000;
+									var serialGenerator = require('./serialGenerator.js');	
+									console.log(serialGenerator());	
+							</code>
+						</pre>
+				</section>
+
+				<section>
+					<h2>Será que o módulo tem acesso a variável global?</h2>
+					<pre>
+							<code class="line-numbers" data-trim >
+									module.exports.generate = function() {	
+										return	Math.floor(Math.random() * max);	
+									};
+							</code>
+						</pre>
+				</section>
+				<section>
+					<h2>Escopo global</h2>
+					<p>console.log(global);</p>
+					<p class="fragment">console.log(Object.keys(global));</p>
+					<p class="fragment">Evite poluir o escopo global</p>
+				</section>
+				<section>
+					<h2>Maneiras de criar variáveis globais</h2>
+					<p>
+						<pre>
+							<code class="line-numbers" data-trim >
+									global.max = 10000;
+									GLOBAL.max = 10000;
+									root.max = 10000;
+							</code>
+						</pre>
+					</p>
+				</section>
+				<section>
+					<h2>variáveis globais</h2>
+					<pre>
+							<code class="line-numbers" data-trim >
+									global.max = 10000;
+									var serialGenerator = require('./serialGenerator.js');	
+									console.log(serialGenerator());	
+							</code>
+						</pre>
+				</section>
+				<section>
+					<h2>Agora sim</h2>
+					<pre>
+							<code class="line-numbers" data-trim >
+									module.exports.generate = function() {	
+										return	Math.floor(Math.random() * global.max);	
+									};
+							</code>
+						</pre>
+				</section>
+
+				<section>
+					<h2>Também é possível criar uma variável global sem a palavra VAR</h2>
+					<pre>
+							<code class="line-numbers" data-trim >
+									max = 10000;
+									var serialGenerator = require('./serialGenerator.js');	
+									console.log(serialGenerator());	
+							</code>
+						</pre>
+				</section>
+				<section>
+					<h2>É possível criar variáveis acessíveis em vários módulos, sem ser global?</h2>
+					<p class="fragment">Sim!! Com um módulo de configuração (config.js por exemplo)</p>
+				</section>
+				<section>
+					<h2>config.js</h2>
+					<pre>
+						<code class="line-numbers" data-trim >
+								exports.max = 10000;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>serialGenerator.js</h2>
+					<pre>
+							<code class="line-numbers" data-trim >
+								var config = require('./config');
+								module.exports.generate = function() {	
+									return Math.floor(Math.random() * config.max);	
+								};
+							</code>
+						</pre>
+				</section>
+				<section>
+					<h2>Vamos praticar um pouco?</h2>
+					<p>Instalar o pacote learnyounode</p>
+					<pre>
+						<code class="line-numbers" data-trim >
+								$ npm install -g learnyounode
+						</code>
+					</pre>
+					<aside class="notes">
+							http://www.devfuria.com.br/node.js/introducao-ao-learnyounode/
+					</aside>
+				</section>
+				<section>
+					<h2>Um framework rápido e minimalista para NODE</h2>
+					<p>Instalar o pacote express-generator</p>
+					<pre>
+						<code class="line-numbers" data-trim >
+								sudo npm install express-generator -g
+						</code>
+					</pre>
+					
+				</section>
+				<section>
+					<h2>Já deu para notar o potencial do node?</h2>
+					<p class="fragment">Consegue imaginar uma aplicação real em node?</p>
+					<p class="fragment">Então mãos a obra!</p>
+				</section>
+				<section>
+					<h2>Projeto final da disciplina</h2>
+					<p class="fragment">Projeto de tema livre!</p>
+					<p class="fragment">Grupos de 3 a 4 integrantes</p>
+					<p class="fragment">Obrigatório uso do ExpressJS e Mongoose (próxima aula)</p>
+					<p class="fragment">Não será necessário o projeto completo. Basta um crud funcionando completo</p>
+				</section>
+				<section>
+					<h2>Referências</h2>
+					<ul>
+						<li>WILSON, Mike. Construindo Aplicações Node com MngoDB e Backbone. Rio de Janeiro: Editora Novatec, 2013</li>
+						<li>PEREIRA, Caio Ribeiro. Aplicações Web real-time com NodeJS. Casa do Código, 2013, ISBN: 9788566250145</li>
+						<li>FREEMAN, Eric, ROBSON, Elisabeth. Use a cabeça! Programação em HTML5. Editora AltaBooks, 2014, ISBN 9788576088455</li>
+					</ul>
+				</section>
+				<section>
+					<p>Estes slides foram elaborados baseado no material de <a href="https://www.slideshare.net/rodrigobranas" target="_blank">Rodrigo Branas</a></p>
+				</section>
+
+
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				slideNumber: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				menu: {
+					// Specifies which side of the presentation the menu will 
+					// be shown. Use 'left' or 'right'.
+					side: 'left',
+
+					// Specifies the width of the menu.
+					// Can be one of the following:
+					// 'normal', 'wide', 'third', 'half', 'full', or
+					// any valid css length value
+					width: 'normal',
+
+					// Add slide numbers to the titles in the slide list.
+					// Use 'true' or format string (same as reveal.js slide numbers)
+					numbers: true,
+
+					// Specifies which slide elements will be used for generating
+					// the slide titles in the menu. The default selects the first
+					// heading element found in the slide, but you can specify any
+					// valid css selector and the text from the first matching
+					// element will be used.
+					// Note: that a section data-menu-title attribute or an element
+					// with a menu-title class will take precedence over this option
+					titleSelector: 'h1, h2, h3, h4, h5, h6',
+
+					// If slides do not have a matching title, attempt to use the
+					// start of the text content as the title instead
+					useTextContentForMissingTitles: false,
+
+					// Hide slides from the menu that do not have a title.
+					// Set to 'true' to only list slides with titles.
+					hideMissingTitles: false,
+
+					// Adds markers to the slide titles to indicate the 
+					// progress through the presentation. Set to 'false'
+					// to hide the markers.
+					markers: true,
+
+					// Specify custom panels to be included in the menu, by
+					// providing an array of objects with 'title', 'icon'
+					// properties, and either a 'src' or 'content' property.
+					custom: false,
+
+					// Specifies the themes that will be available in the themes
+					// menu panel. Set to 'true' to show the themes menu panel
+					// with the default themes list. Alternatively, provide an
+					// array to specify the themes to make available in the
+					// themes menu panel, for example...
+					// [
+					//     { name: 'Black', theme: 'css/theme/black.css' },
+					//     { name: 'White', theme: 'css/theme/white.css' },
+					//     { name: 'League', theme: 'css/theme/league.css' }
+					// ]
+					themes: true,
+
+					// Specifies the path to the default theme files. If your
+					// presentation uses a different path to the standard reveal
+					// layout then you need to provide this option, but only
+					// when 'themes' is set to 'true'. If you provide your own 
+					// list of themes or 'themes' is set to 'false' the 
+					// 'themesPath' option is ignored.
+					themesPath: 'css/theme/',
+
+					// Specifies if the transitions menu panel will be shown.
+					// Set to 'true' to show the transitions menu panel with
+					// the default transitions list. Alternatively, provide an
+					// array to specify the transitions to make available in
+					// the transitions panel, for example...
+					// ['None', 'Fade', 'Slide']
+					transitions: false,
+
+					// Adds a menu button to the slides to open the menu panel.
+					// Set to 'false' to hide the button.
+					openButton: true,
+
+					// If 'true' allows the slide number in the presentation to
+					// open the menu panel. The reveal.js slideNumber option must 
+					// be displayed for this to take effect
+					openSlideNumber: false,
+
+					// If true allows the user to open and navigate the menu using
+					// the keyboard. Standard keyboard interaction with reveal
+					// will be disabled while the menu is open.
+					keyboard: true,
+
+					// Normally the menu will close on user actions such as
+					// selecting a menu item, or clicking the presentation area.
+					// If 'true', the sticky option will leave the menu open
+					// until it is explicitly closed, that is, using the close
+					// button or pressing the ESC or m key (when the keyboard 
+					// interaction option is enabled).
+					sticky: false,
+
+					// If 'true' standard menu items will be automatically opened
+					// when navigating using the keyboard. Note: this only takes 
+					// effect when both the 'keyboard' and 'sticky' options are enabled.
+					autoOpen: true,
+
+					// If 'true' the menu will not be created until it is explicitly
+					// requested by calling RevealMenu.init(). Note this will delay
+					// the creation of all menu panels, including custom panels, and
+					// the menu button.
+					delayInit: false,
+
+					// If 'true' the menu will be shown when the menu is initialised.
+					openOnInit: false,
+
+					// By default the menu will load it's own font-awesome library
+					// icons. If your presentation needs to load a different
+					// font-awesome library the 'loadIcons' option can be set to false
+					// and the menu will not attempt to load the font-awesome library.
+					loadIcons: true
+				},
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'node_modules/reveal.js-menu/menu.js' },
+					{ src: 'plugin/line-numbers/line-numbers.js'}
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

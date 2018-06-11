@@ -1,0 +1,1910 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Desenvolvimento web com Javascript</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<link href="css/fontawesome-all.min.css" rel="stylesheet">
+		<link href="css/fa-brands.min.css" rel="stylesheet">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h2>Desenvolvimento Web com JavaScript (Aula 2)</h2>
+					<h4>Uma abordagem <i class="fab fa-node fa-lg"></i></h4>
+					
+					<p>
+						Especialização em: DESENVOLVIMENTO WEB, CLOUD E DISPOSITIVOS MÓVEIS
+						<br/><small>Professor: <a href="http://lattes.cnpq.br/3629415473382582">Luiz Pedro Petroski</a></small>
+					</p>
+					<img class="stretch" src="images/logo_unoesc.jpg"/>
+				</section>
+				<section>
+					<h2>Dicas para Desenvolvimento assincrono</h2>
+					<p>
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+								var fs = require('fs');
+								for(var i = 1; i <= 5; i++) {
+									var file = "sync-txt" + i + ".txt";
+									var out = fs.writeFileSync(file, "Hello Node.js!");
+									console.log(out);
+								}
+							</code>
+						</pre>
+					</p>
+				</section>
+				<section>
+					<h2>Dicas para Desenvolvimento assincrono</h2>
+					<p>
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+								var fs = require('fs');
+								for(var i = 1; i <= 5; i++) {
+									var file = "async-txt" + i + ".txt";
+									fs.writeFile(file, "Hello Node.js!", function(err, out) {
+										console.log(out);
+									});
+								}
+							</code>
+						</pre>
+					</p>
+				</section>
+				<section>
+					<h2>Timeline FS sincrono</h2>
+					<img class="stretch" src="images/fs_sync.png"/>
+				</section>
+				<section>
+					<h2>Timeline FS assincrono</h2>
+					<img class="stretch" src="images/fs_async.png"/>
+				</section>
+				<section>
+					<h2>Threads vs Assincronismos</h2>
+					<p>As funções assicronas não podem ser consideradas theads (como é em Java)</p>
+					<p>Threads são manipuláveis (pausar, aguardar o termino). Já chamadas assincronas somente sabe que finalizou pela execução do callback</p>
+				</section>
+				<section>
+					<h2>Evitar funções sincronas</h2>
+					<p>Essas funções impedem que seja executado os demais códigos até que esta seja finalizada</p>
+					<p>Por exemplo, uma operação de I/O vai bloquear o sistema inteiro, enquanto o processador fica ocioso</p>
+				</section>
+				<section>
+					<h2>Evitar encadeamento de callback</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							var fs = require('fs');
+								fs.readdir(__dirname, function(erro, contents) {
+								if (erro) { throw erro; }
+								contents.forEach(function(content) {
+									var path = './' + content;
+									fs.stat(path, function(erro, stat) {
+										if (erro) { throw erro; }
+										if (stat.isFile()) {
+											console.log('%s %d bytes', content, stat.size);
+										}
+									});
+								});
+							});
+						</code>
+					</pre>
+				</section>
+				<section>
+						<h2>Melhor legibilidade</h2>
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+									var fs = require('fs');
+									var lerDiretorio = function() {
+										fs.readdir(__dirname, function(erro, diretorio) {
+											if (erro) return erro;
+											diretorio.forEach(function(arquivo) {
+												ler(arquivo);
+											});
+										});
+									};
+									var ler = function(arquivo) {
+										var path = './' + arquivo;
+										fs.stat(path, function(erro, stat) {
+											if (erro) return erro;
+											if (stat.isFile()) {
+												console.log('%s %d bytes', arquivo, stat.size);
+											}
+										});
+									};
+									lerDiretorio();
+							</code>
+						</pre>
+					</section>
+				<section>
+					<h2>Aplicações Web</h2>
+					<p>Protocolos nativos:</p>
+					<ul>
+						<li>HTTP/HTTPS</li>
+						<li>FTP</li>
+						<li>SSH</li>
+						<li>DNS</li>
+						<li>TCP/UDP</li>
+						<li>WebSockets</li>
+					</ul>
+					<p class="fragment">E outros protocolos através de módulos de terceiros</p>
+				</section>
+				<section>
+					<h2>Servidor</h2>
+					<p>Toda aplicação Web nescessita um servidor para disponibilizar os recursos</p>
+					<p>O node permite criar uma aplicação <i>middleware</i></p>
+					<p class="fragment">Além das funcionalidades da aplicação, também pode-se configurar a infraestrutura</p>
+				</section>
+				<section>
+					<h2>Facilitando o trabalho</h2>
+					<p>Módulos adicionais podem fornecer configurações padrões prontas. Ex:</p>
+					<ul>
+						<li>Connect <a href="https://github.com/senchalabs/connect" target="_blank">https://github.com/senchalabs/connect</a></li>
+						<li>Express <a href="http://expressjs.com/" target="_blank">http://expressjs.com/</a></li>
+						<li>Geddy <a href="http://geddyjs.org/" target="_blank">http://geddyjs.org/</a></li>
+						<li>CompoundJS <a href="http://compoundjs.com/" target="_blank">http://compoundjs.com/</a></li>
+						<li>Sails <a href="https://sailsjs.com/" target="_blank">https://sailsjs.com/</a></li>
+					</ul>
+				</section>
+				<section>
+					<h2>Módulo</h2>
+					<p>Esses módulos já são preparados para trabalhar desde uma infraestrutura mínima até uma mais en-
+						xuta, permitindo trabalhar desde arquiteturas RESTFul, padrão MVC (Model-View-
+						Controller) e também com conexões real-time utilizando WebSockets.</p>
+				</section>
+				<section>
+					<h2>Módulo HTTP nativo</h2>
+					<p>Para compreender o conceito do módulo HTTP vamos implementar um servidor simples que atende requisições na porta 3000 e responde um texto html simples</p>
+				</section>
+				<section>
+					<h2>hello_server.js</h2>
+					<p>
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+								var http = require('http');
+								var server = http.createServer(function(request, response){
+									response.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
+									response.write("<h1>Hello World!</h1>");
+									response.end();
+								});
+								server.listen(3000);
+							</code>
+						</pre>
+					</p>
+				</section>
+				<section>
+						<h2>Funcionamento</h2>
+						<p>O servidor utiliza o Event Loop para controlar os eventos.
+							A função <i>http.createServer()</i> levanta o servidor.</p>
+							<p>A função de callback <b>function (request, response)</b> é executada quando ocorre a requisição</p>
+							<p class="fragment"> Ou seja: o Event Loop fica verificando as requisições e quando ocorre, emite um evento para executar a função de callback</p>
+				</section>
+				<section>
+					<h2>Lembrando que o Node é assincrono</h2>
+					<p>Por isso é muito utilizado o recurso de callback. Por exemplo podemos adicionar um callback na função <b>server.listen</b></p>
+					<pre class="stretch">
+							<code class="line-numbers" data-trim >
+									server.listen(3000, function(){
+										console.log('Servidor Hello World rodando!');
+									});
+							</code>
+						</pre>
+				</section>
+				<section>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+								var http = require('http');
+								var atendeRequisicao = function(request, response) {
+									response.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
+									response.write("<h1>Hello World!</h1>");
+									response.end();
+								}
+								var servidorLigou = function() {
+									console.log('Servidor Hello World rodando!');
+								}
+								var server = http.createServer(atendeRequisicao);
+								server.listen(3000, servidorLigou);
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>E como funciona as rotas?</h2>
+					<p>Até o momento ignoramos o caminho da URL e respondemos a mesma resposta independentemente da rota</p>
+					<p class="fragment">Para verificar diferentes rotas podemos utilizar o objeto <b>request</b> em sua prorpiedade <b>url</b></p>
+					<p class="fragment">E para isso podemos fazer um simples encadeamento de condições</p>
+				</section>
+				<section>
+					<h2>hello_server3.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+								var http = require('http');
+								var server = http.createServer(function(request, response){
+									response.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
+									if(request.url == "/"){
+										response.write("<h1>Página principal</h1>");
+									}else if(request.url == "/bemvindo"){
+										response.write("<h1>Bem-vindo :)</h1>");
+									}else{
+										response.write("<h1>Página não encontrada :(</h1>");
+									}
+									response.end();
+								});
+								server.listen(3000, function(){
+									console.log('Servidor rodando!');
+								});
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Módulo URL</h2>
+					<p>O endereço utiliza dois padrões para capturar valores na url:</p>
+					<ul>
+						<li>query strings: <i>?nome=joao</i></li>
+						<li>path: <i>/usuario/listar</i></li>
+					</ul>
+					<p>O módulo URL pode auxiliar no parser e formatação das urls</p>
+				</section>
+				<section>
+					<h2>url_server.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							const http = require('http');
+							const url = require('url');
+							const server = http.createServer((request, response) => {
+								response.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
+								response.write('<h1>Dados da query string</h1>');
+								const result = url.parse(request.url, true);
+								for(var key in result.query){
+									response.write("<h2>"+key+" : "+result.query[key]+"</h2>");
+								}
+								response.end();
+							});
+							server.listen(3000, () => {
+								console.log('Servidor http.');
+							});
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Atributos do objeto URL</h2>
+					<ul>
+						<li>href: Retorna a url completa: ‘http://user:pass@host.com:8080/p/a/t/h?query=string#hash’</li>
+						<li>protocol: Retorna o protocolo: ‘http’</li>
+						<li>host: Retorna o domínio com a porta: ‘host.com:8080’</li>
+						<li>auth: Retorna dados de autenticação: ‘user:pass’</li>
+						<li>hostname: Retorna o domínio: ‘host.com’</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Atributos do objeto URL</h2>
+					<ul>
+						<li>port: Retorna a porta: ‘8080’</li>
+						<li>pathname: Retorna os pathnames da url: ‘/p/a/t/h’</li>
+						<li>search: Retorna uma query string: ‘?query=string’</li>
+						<li>path: Retorna a concatenação de pathname com query string:‘/p/a/t/h?query=string’</li>
+						<li>query: Retorna uma query string em JSON: {‘query’:’string’}</li>
+						<li>hash: Retorna ancora da url: ‘#hash’</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Separando HTML e JS</h2>
+					<p>
+							Agora precisamos organizar os códigos HTML, e uma boa prática é separá-los do
+							Javascript, fazendo com que a aplicação renderize código HTML quando o usuário
+							solicitar uma determinada rota. Para isso, utilizaremos outro módulo nativo FS (File
+							System). Ele é responsável por manipular arquivos e diretórios do sistema operacional.
+					</p>
+				</section>
+				<section>
+					<h2>Exemplo para ler um arquivo</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							var fs = require('fs');
+							fs.readFile('/index.html', function(erro, arquivo){
+								if (erro) throw erro;
+								console.log(arquivo);
+							});
+							var arquivo = fs.readFileSync('/index.html');
+							console.log(arquivo);
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>site_pessoal.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+								var http = require('http');
+								var fs = require('fs');
+								var server = http.createServer(function(request, response){
+									// A constante __dirname retorna o diretório raiz da aplicação.
+									fs.readFile(__dirname + '/index.html', function(err, html){
+										response.writeHeader(200, {'Content-Type': 'text/html; charset=utf-8'});
+										response.write(html);
+										response.end();
+									});
+								});
+								server.listen(3000, function(){
+									console.log('Executando Site Pessoal');
+								});
+						</code>
+					</pre>
+					
+				</section>
+				<section>
+					<h2>index.html</h2>
+					<pre class="stretch">
+						<code data-trim >
+							&#x3C;html&#x3E;
+								&#x3C;head&#x3E;
+									&#x3C;title&#x3E;Ol&#xE1; este &#xE9; o meu site pessoal!&#x3C;/title&#x3E;
+								&#x3C;/head&#x3E;
+								&#x3C;body&#x3E;
+									&#x3C;h1&#x3E;Bem vindo ao meu site pessoal&#x3C;/h1&#x3E;
+								&#x3C;/body&#x3E;
+							&#x3C;/html&#x3E;
+						</code>
+					</pre>
+					
+				</section>
+				<section>
+					<h2>Exercício</h2>
+					<ul>
+						<li>Crie 3 arquivos HTML: artigos.html, contato.html e erro.html (qualquer conteúdo);</li>
+						<li>Ao digitar no browser o path: /artigos deve renderizar artigos.html;</li>
+						<li>A regra anterior também se aplica para o arquivo contato.html;</li>
+						<li>Ao digitar qualquer path diferente de /artigos e /contato deve renderizar erro.html;</li>
+						<li>A leitura dos arquivos html deve ser assíncrona;</li>
+						<li>A rota principal "/” deve renderizar artigos.html;</li>
+					</ul>
+					<aside class="notes">
+
+					</aside>
+				</section>
+				<section>
+					<h2>Porque utilizar um framework para aplicações Web?</h2>
+					<p class="fragment">
+						Programar utilizando apenas a API HTTP nativa é muito trabalhoso! Conforme
+						surgem necessidades de implementar novas funcionalidades, códigos gigantescos se-
+						riam acrescentados, aumentando a complexidade do projeto e dificultando futuras
+						manutenções.</p>
+				</section>
+				<section>
+					<h2>Express</h2>
+					<ul>
+						<li>MVC (Model-View-Controller);</li>
+						<li>Roteamento de urls via callbacks;</li>
+						<li>Middleware;</li>
+						<li>Interface RESTFul;</li>
+						<li>Suporte a File Uploads;</li>
+						<li>Configuração baseado em variáveis de ambiente;</li>
+						<li>Suporte a helpers dinâmicos;</li>
+						<li>Integração com Template Engines;</li>
+						<li>Integração com SQL e NoSQL;</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Instalação</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							$ npm install -g express
+							$ express -h
+						</code>
+					</pre>
+					<p class="fragment">O express possui um CLI (Command Line Interface) para criar os projetos</p>
+				</section>
+				<section>
+					<h2>Parte 1</h2>
+					<p>Iniciando o projeto e funcionalidades básicas</p>
+				</section>
+				<section>
+					<h2>
+						Criando o esqueleto do projeto
+					</h2>
+					<pre class="stretch">
+							<code class="line-numbers" data-trim >
+								$ express ntalk --ejs
+								$ cd ntalk
+								$ npm install
+							</code>
+						</pre>
+				</section>
+				<section>
+					<h2>Entendendo a estrutura</h2>
+					<ul>
+						<li>package.json: informações sobre a aplicação (nome, autor, versão, dependências, etc)</li>
+						<li>public: conteúdo estático (imagens, css, js etc).</li>
+						<li>app.js : inicializa o servidor.</li>
+						<li>routes : rotas da aplicação.</li>
+						<li>views : views renderizadas pelas rotas.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Instalação das dependências</h2>
+					<p>Ao rodarmos o comando npm install , por padrão ele instalou as dependências existentes no package.json na pasta chamada node_modules. Neste caso, ele apenas instalou o Express e o EJS (Embedded Javascript).</p>
+				</section>
+				<section>
+					<h2>
+						Atualizando package.json
+					</h2>
+					<pre class="stretch">
+							<code class="line-numbers" data-trim >
+								{
+									"name": "ntalk",
+									"description": "Node talk - Agenda de contatos",
+									"private": false,
+									"version": "0.0.1",
+									"scripts": {
+									  "start": "node app.js"
+									},
+									"dependencies": {
+									  "consign": "^0.1.6",
+									  "ejs": "2.6.1",
+									  "express": "4.16.3"
+									}
+								  }
+								  
+							</code>
+						</pre>
+				</section>
+				<section>
+					<h2>
+						app.js simplificado
+					</h2>
+					<pre class="stretch">
+							<code class="line-numbers" data-trim >
+								var express = require('express')
+								, load = require('consign')
+								, app = express();
+								app.set('views', __dirname + '/views');
+								app.set('view engine', 'ejs');
+								app.use(express.static(__dirname + '/public'));
+								load().include('models')
+								.then('controllers')
+								.then('routes')
+								.into(app);
+								app.listen(3000, function(){
+									console.log("Ntalk no ar.");
+								});
+							</code>
+						</pre>
+				</section>
+				<section>
+					<h2>função express()</h2>
+					<p>Esta função retorna todas as funcionalidades do framework (armazenada na varipavel app)</p>
+					<p>Por exemplo tempos a função app.listen(). Similar a http.listen() que coloca a aplicação no ar</p>
+				</section>
+				<section>
+					<h2>Métodos do procolo HTTP</h2>
+					<ul>
+						<li>app.get() - GET</li>
+						<li>app.post() - POST</li>
+						<li>app.put() - PUT</li>
+						<li>app.del() - DELETE</li>
+					</ul>
+					<p>O primeiro parametro é a rota (string) e o segundo é uma função callback (request, response)</p>
+					<p>Ex: app.get('/contatos', function(request, response));</p>
+				</section>
+				<section>
+					<h2>app.set(chave, valor)</h2>
+					<p>Estrutura de chave e valor mantida dentro da variável app</p>
+					<p>Similar a utilizar app["chave"] = "valor";</p>
+					<ul>
+						<li>app.set('views', '/views')</li>
+						<li>app.set('view engine', 'ejs')</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Funções herdadas</h2>
+					<p>Boa parte das funções do express são herdadas dos módulos HTTP e Connect</p>
+					<p>HTTP já estudamos anteriormente</p>
+					<p>Connect é um middleware para servidores HTTP: pilha (stack) de configurações</p>
+					<p>Recomendo a leitura da <a href="https://github.com/senchalabs/connect" target="_blank">Documentação Connect</a></p>
+				</section>
+				<section>
+					<h2>Organização do projeto</h2>
+					<p>O Expres é flexível em relação a estrutura de diretórios, apesar do esqueleto inicial, podemos personalizar conforme a nescessidade do projeto</p>
+					<p>Vamos utilizar a estrutura do <i>pattern</i> MVC (Model-View-Controller)</p>
+				</section>
+				<section>
+					<h2>Criar as pastas "models" e "controllers"</h2>
+					<img class="stretch" src="images/estrutura_projeto.png"/>
+				</section>
+				<section>
+					<h2>Chamada dos models e controllers</h2>
+					<p>Para chamar um model dentro de um controller utiliza-se o require('/models/nome-do-model')</p>
+					<p>Já os controllers ficariam muito poluidos ao utilizar muitos requires</p>
+					<p>Por isso podemos utilizar o módulo consign (sucessor do express-load)</p>
+				</section>
+				<section>
+					<h2>Instalação e utilização</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							"dependencies": {
+								"consign": "^0.1.6",
+								"ejs": "2.6.1",
+								"express": "4.16.3"
+							  }
+						</code>
+					</pre>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							var load = require('consign');
+							load().include('models')
+							.then('controllers')
+							.then('routes')
+							.into(app);
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Ordem de importação</h2>
+					<p>É importante colocar em ordem os recursos a serem carregados pela função load() . Neste caso os models são carregados primeiro, em seguida vêm os controllers, e por último os routes.</p>
+				</section>
+				<section>
+					<h2>routes/home.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+								module.exports = function(app) {
+									var home = app.controllers.home;
+									app.get('/', home.index);
+								};
+						</code>
+					</pre>
+					<aside class="notes">
+						O consign criou um objeto chamado controllers dentro de
+app . Ele cria uma estrutura de objetos de acordo com o diretório e arquivo.
+Neste caso o app.controllers.home esta se referenciando ao arquivo
+controllers/home.js .
+					</aside>
+				</section>
+				<section>
+					<h2>controllers/home.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							module.exports = function(app) {
+								var HomeController = {
+									index: function(req, res) {
+										res.render('home/index');
+									}
+								};
+								return HomeController;
+							};
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>views/home/index.ejs</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							&#x3C;!DOCTYPE html&#x3E;
+							&#x3C;html&#x3E;
+								&#x3C;head&#x3E;
+									&#x3C;meta charset=&#x22;utf-8&#x22;&#x3E;
+									&#x3C;title&#x3E;Ntalk - Agenda de contatos&#x3C;/title&#x3E;
+								&#x3C;/head&#x3E;
+								&#x3C;body&#x3E;
+									&#x3C;header&#x3E;
+										&#x3C;h1&#x3E;Ntalk&#x3C;/h1&#x3E;
+										&#x3C;h4&#x3E;Bem-vindo!&#x3C;/h4&#x3E;
+									&#x3C;/header&#x3E;
+									&#x3C;section&#x3E;
+										&#x3C;form action=&#x22;/entrar&#x22; method=&#x22;post&#x22;&#x3E;
+											&#x3C;input type=&#x22;text&#x22; name=&#x22;nome&#x22; placeholder=&#x22;Seu nome&#x22;&#x3E;
+											&#x3C;br&#x3E;
+											&#x3C;input type=&#x22;text&#x22; name=&#x22;email&#x22; placeholder=&#x22;Seu e-mail&#x22;&#x3E;
+											&#x3C;br&#x3E;
+											&#x3C;button type=&#x22;submit&#x22;&#x3E;Entrar&#x3C;/button&#x3E;
+										&#x3C;/form&#x3E;
+									&#x3C;/section&#x3E;
+									&#x3C;footer&#x3E;
+										&#x3C;small&#x3E;Ntalk - Agenda de contatos&#x3C;/small&#x3E;
+									&#x3C;/footer&#x3E;
+								&#x3C;/body&#x3E;
+							&#x3C;/html&#x3E;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Parte 2</h2>
+					<p>Funcionalidades EJS, sessão e formulário</p>
+					<p><a href="http://ejs.co/#docs" target="_blank">Documentação EJS</a></p>
+				</section>
+				<section>
+					<h2>Módulo EJS</h2>
+					<p>O módulo EJS possui diversas funcionalidades que permitem programar conteúdo	dinâmico em código html.</p>
+					<p>Iremos utilizar algumas funcionalidades para renderizar os conteúdos dinâmicos e minimizar repetições</p>
+				</section>
+				<section>
+					<h2>views/header.ejs</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							&#x3C;!DOCTYPE html&#x3E;
+							&#x3C;html&#x3E;
+								&#x3C;head&#x3E;
+									&#x3C;meta charset=&#x22;utf-8&#x22;&#x3E;
+									&#x3C;title&#x3E;Ntalk - Agenda de contatos&#x3C;/title&#x3E;
+								&#x3C;/head&#x3E;
+								&#x3C;body&#x3E;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>views/footer.ejs</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+								&#x3C;footer&#x3E;
+									&#x3C;small&#x3E;Ntalk - Agenda de contatos&#x3C;/small&#x3E;
+								&#x3C;/footer&#x3E;
+							&#x3C;/body&#x3E;
+						&#x3C;/html&#x3E;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>views/home/index.ejs</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							&#x3C;% include ../header %&#x3E;
+							&#x3C;header&#x3E;
+								&#x3C;h1&#x3E;Ntalk&#x3C;/h1&#x3E;
+								&#x3C;h4&#x3E;Bem-vindo!&#x3C;/h4&#x3E;
+							&#x3C;/header&#x3E;
+							&#x3C;section&#x3E;
+								&#x3C;form action=&#x22;/entrar&#x22; method=&#x22;post&#x22;&#x3E;
+									&#x3C;input type=&#x22;text&#x22; name=&#x22;usuario[nome]&#x22;
+									placeholder=&#x22;Digite o nome&#x22;&#x3E;
+									&#x3C;br&#x3E;
+									&#x3C;input type=&#x22;text&#x22; name=&#x22;usuario[email]&#x22;
+									placeholder=&#x22;Digite o e-mail&#x22;&#x3E;
+									&#x3C;br&#x3E;
+									&#x3C;button type=&#x22;submit&#x22;&#x3E;Entrar&#x3C;/button&#x3E;
+								&#x3C;/form&#x3E;
+							&#x3C;/section&#x3E;
+							&#x3C;% include ../footer %&#x3E;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Controlando a sessão</h2>
+					<p>Para manipular a sessão através do Express, podemos utilizar a variável session dentro da requisição</p>
+					<p><i>req.session</i></p>
+					<p class="fragment">A primeira coisa é adicionar as rotas para as respectivas funções do controller</p>
+				</section>
+				<section>
+					<h2>routes/home.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							module.exports = function(app) {
+								var home = app.controllers.home;
+								app.get('/', home.index);
+								app.post('/entrar', home.login);
+								app.get('/sair', home.logout);
+								
+							  };
+							  
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Agora precisamos implementar as ações de login e logout</h2>
+					<p>Para o login, será verificado os campos do formulário (nome e email) e caso nao sejam vazios será armazenado em sessão</p>
+					<p>Para logout será destruida a sessão</p>
+				</section>
+				<section>
+					<h2>controller/home.js ... propriedade login</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							login: function(req, res) {
+								var email = req.body.usuario.email
+								, nome = req.body.usuario.nome;
+								if(email && nome) {
+									var usuario = req.body.usuario;
+									usuario['contatos'] = [];
+									req.session.usuario = usuario;
+									res.redirect('/contatos');
+								} else {
+									res.redirect('/');
+								}
+							},
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>controller/home.js ... propriedade logout</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							logout: function(req, res) {
+								req.session.destroy();
+								res.redirect('/');
+							}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Vamos testar?</h2>
+					<p class="fragment">
+						Poque não funcionou?
+						<img class="stretch" src="images/erro_formulario.png"/>
+					</p>
+				</section>
+				<section>
+					<h2>Parse do do formulario para JSON</h2>
+					<p>Podemos fazer o parser pela stack de configurações</p>
+					<p>Vamos corrigir também a stack para funcionar a sessão e cookies</p>
+				</section>
+				<section>
+					<h1>Instalar modulos adicionais</h1>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							$ npm install --save cookie-parser
+							$ npm install --save express-session
+							$ npm install --save body-parser
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>app.js stack de configurações</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+								var express = require('express')
+								, load = require('consign')
+								, cookieParser = require('cookie-parser')
+								, session = require('express-session')
+								, bodyParser = require('body-parser')
+								, app = express();
+
+								app.set('views', __dirname + '/views');
+								app.set('view engine', 'ejs');
+								app.use(cookieParser('ntalk'));
+								app.use(session({
+									secret: "abc123",
+									name: 'ntalk',
+									resave: true,
+									saveUninitialized: true
+								}));
+								app.use(bodyParser.urlencoded({extended: true}));
+								app.use(bodyParser.json());
+								app.use(express.static(__dirname + '/public'));
+						</code>
+					</pre>
+					<aside class="notes">
+						É nescessário incluir o express.cookieParser(), pois o	express.session() utiliza-o para codificar e ou decodificar o SessionID
+					</aside>
+				</section>
+				<section>
+					<h2>Entendendo...</h2>
+					<p><b>cookieParser()</b>: para codificar e decodificar o sessionID persistido no Cookie</p>
+					<p><b>session()</b>: para controlar a sessão</p>
+					<p><b>bodyParser()</b>: Criar objetos JSON, utiliza os atributos name e value das tags para criar o objeto</p>
+					<p>Ex: &#x3C;input name=&#x22;usuario[idade]&#x22; value=&#x22;23&#x22;&#x3E; <i class="fa fa-arrow-circle-right"></i> req.body.usuario.idade=23</p>
+				</section>
+				<section>
+					<h2>Implementar os contatos</h2>
+					<p>Controller, routes e view para os contatos</p>
+					<p>Contatos seá a pagina após logado no sistema</p>
+				</section>
+				<section>
+					<h2>views/contatos/index.ejs</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+								&#x3C;% include ../header %&#x3E;
+								&#x3C;header&#x3E;
+									&#x3C;h2&#x3E;Ntalk - Agenda de contatos&#x3C;/h2&#x3E;
+								&#x3C;/header&#x3E;
+								&#x3C;section&#x3E;
+									&#x3C;p&#x3E;Bem-vindo &#x3C;%- usuario.nome %&#x3E;&#x3C;/p&#x3E;
+								&#x3C;/section&#x3E;
+								&#x3C;% include ../exit %&#x3E;
+								&#x3C;% include ../footer %&#x3E;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>views/exit.ejs</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							&#x3C;section&#x3E;
+								&#x3C;a href=&#x27;/sair&#x27;&#x3E;Sair&#x3C;/a&#x3E;
+							&#x3C;/section&#x3E;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>controller/contatos.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+								module.exports = function(app) {
+									var ContatoController = {
+										index: function(req, res) {
+											var usuario = req.session.usuario
+											, params = {usuario: usuario};
+											res.render('contatos/index', params);
+										}
+									}
+									return ContatoController;
+								};
+									
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>router/contatos.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+								module.exports = function(app) {
+									var contatos = app.controllers.contatos;
+									app.get('/contatos', contatos.index);
+								};
+									
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Parte 3</h2>
+					<p>Rotas REST, filtros e páginas de erro</p>
+				</section>
+				<section>
+					<h2>Create, Receive, Update e Delete (CRUD)</h2>
+					<p>Conjunto clássico de funcionalidades: Criar, Listar, Atualizar e Excluir</p>
+					<p>Padrão de rotas REST: Criar rotas utilizando os principais métodos do HTTP (GET, POST, PUT e DELETE)</p>
+				</section>
+				<section>
+					<h2>methodOverride</h2>
+					<p>Permite utilizar um mesmo path entre os métodos do HTTP, fazendo uma sobrescrita de métodos</p>
+					<p>
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+								$ npm install --save method-override
+							</code>
+						</pre>
+					</p>
+				</section>
+				<section>
+					<h2>adicinar ao app.js</h2>
+					<p>
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+								...
+								var methodOverride = require('method-override');
+								...
+								app.use(methodOverride('_method'));
+							</code>
+						</pre>
+					</p>
+				</section>
+				<section>
+					<h2>routes/contatos.js</h2>
+					<p>
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+									module.exports = function(app) {
+										var contatos = app.controllers.contatos;
+										app.get('/contatos', contatos.index);
+										app.get('/contato/:id', contatos.show);
+										app.post('/contato', contatos.create);
+										app.get('/contato/:id/editar', contatos.edit);
+										app.put('/contato/:id', contatos.update);
+										app.delete('/contato/:id', contatos.destroy);
+									};
+							</code>
+						</pre>
+					</p>
+				</section>
+				<section>
+					<h2>controller/contatos.js</h2>
+					<p>
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+								module.exports = function(app) {
+									var ContatoController = {
+										index: function(req, res) {
+											var usuario = req.session.usuario
+											, contatos = usuario.contatos
+											, params = {usuario: usuario
+												, contatos:contatos};
+											res.render('contatos/index', params);
+										},
+										//continuação do controller
+									}
+									return ContatoController;
+								};
+							</code>
+						</pre>
+					</p>
+				</section>
+				<section>
+					<h2>controller/contatos.js</h2>
+					<p>
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+									create: function(req, res) {
+										var contato = req.body.contato
+										, usuario = req.session.usuario;
+										usuario.contatos.push(contato);
+										res.redirect('/contatos');
+									},
+									//continuação do controller
+							</code>
+						</pre>
+					</p>
+				</section>
+				<section>
+					<h2>controller/contatos.js</h2>
+					<p>
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+									show: function(req, res) {
+										var id = req.params.id
+										, contato = req.session.usuario.contatos[id]
+										, params = {contato: contato, id: id};
+										res.render('contatos/show', params);
+									},
+									edit: function(req, res) {
+										var id = req.params.id
+										, usuario = req.session.usuario
+										, contato = usuario.contatos[id]
+										, params = {usuario: usuario
+										, contato: contato
+										, id: id};
+										res.render('contatos/edit', params);
+									},
+									//continuação do controller
+							</code>
+						</pre>
+					</p>
+				</section>
+				<section>
+					<h2>controller/contatos.js</h2>
+					<p>
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+								update: function(req, res) {
+									var contato = req.body.contato
+									, usuario = req.session.usuario;
+									usuario.contatos[req.params.id] = contato;
+									res.redirect('/contatos');
+								},
+								//continuação do controller
+							</code>
+						</pre>
+					</p>
+				</section>
+				<section>
+					<h2>controller/contatos.js</h2>
+					<p>
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+								destroy: function(req, res) {
+									var usuario = req.session.usuario
+									, id = req.params.id;
+									usuario.contatos.splice(id, 1);
+									res.redirect('/contatos');
+								}
+								// fim do controller...
+							</code>
+						</pre>
+					</p>
+				</section>
+				<section>
+					<h2>views/contatos/index.ejs</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+								&#x3C;% include ../header %&#x3E;
+								&#x3C;header&#x3E;
+									&#x3C;h2&#x3E;Ntalk - Agenda de contatos&#x3C;/h2&#x3E;
+								&#x3C;/header&#x3E;
+								&#x3C;section&#x3E;
+									&#x3C;form action=&#x22;/contato&#x22; method=&#x22;post&#x22;&#x3E;
+										&#x3C;input type=&#x22;text&#x22; name=&#x22;contato[nome]&#x22;
+												placeholder=&#x22;Nome&#x22;&#x3E;
+										&#x3C;input type=&#x22;text&#x22; name=&#x22;contato[email]&#x22;
+												placeholder=&#x22;E-mail&#x22;&#x3E;
+										&#x3C;button type=&#x22;submit&#x22;&#x3E;Cadastrar&#x3C;/button&#x3E;
+									&#x3C;/form&#x3E;
+									&#x3C;table&#x3E;
+										&#x3C;thead&#x3E;
+											&#x3C;tr&#x3E;
+												&#x3C;th&#x3E;Nome&#x3C;/th&#x3E;
+												&#x3C;th&#x3E;E-mail&#x3C;/th&#x3E;
+												&#x3C;th&#x3E;A&#xE7;&#xE3;o&#x3C;/th&#x3E;
+											&#x3C;/tr&#x3E;
+										&#x3C;/thead&#x3E;
+										&#x3C;tbody&#x3E;
+											&#x3C;% contatos.forEach(function(contato, index) { %&#x3E;
+												&#x3C;tr&#x3E;
+													&#x3C;td&#x3E;&#x3C;%- contato.nome %&#x3E;&#x3C;/td&#x3E;
+													&#x3C;td&#x3E;&#x3C;%- contato.email %&#x3E;&#x3C;/td&#x3E;
+													&#x3C;td&#x3E;
+														&#x3C;a href=&#x22;/contato/&#x3C;%- index %&#x3E;&#x22;&#x3E;Detalhes&#x3C;/a&#x3E;
+													&#x3C;/td&#x3E;
+												&#x3C;/tr&#x3E;
+											&#x3C;% }) %&#x3E;
+										&#x3C;/tbody&#x3E;
+									&#x3C;/table&#x3E;
+								&#x3C;/section&#x3E;
+								&#x3C;% include ../exit %&#x3E;
+								&#x3C;% include ../footer %&#x3E;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>views/contatos/edit.ejs</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+								&#x3C;% include ../header %&#x3E;
+								&#x3C;header&#x3E;
+									&#x3C;h2&#x3E;Ntalk - Editar contato&#x3C;/h2&#x3E;
+								&#x3C;/header&#x3E;
+								&#x3C;section&#x3E;
+									&#x3C;form action=&#x22;/contato/&#x3C;%- id %&#x3E;?_method=PUT&#x22; method=&#x22;post&#x22; &#x3E;
+										&#x3C;label&#x3E;Nome:&#x3C;/label&#x3E;
+										&#x3C;input type=&#x22;text&#x22; name=&#x22;contato[nome]&#x22;
+										value=&#x22;&#x3C;%- contato.nome %&#x3E;&#x22;&#x3E;
+										&#x3C;label&#x3E;E-mail:&#x3C;/label&#x3E;
+										&#x3C;input type=&#x22;text&#x22; name=&#x22;contato[email]&#x22;
+										value=&#x22;&#x3C;%- contato.email %&#x3E;&#x22;&#x3E;
+										&#x3C;button type=&#x22;submit&#x22;&#x3E;Atualizar&#x3C;/button&#x3E;
+									&#x3C;/form&#x3E;
+								&#x3C;/section&#x3E;
+								&#x3C;% include ../exit %&#x3E;
+								&#x3C;% include ../footer %&#x3E;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>views/contatos/show.ejs</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+								&#x3C;% include ../header %&#x3E;
+								&#x3C;header&#x3E;
+									&#x3C;h2&#x3E;Ntalk - Dados do contato&#x3C;/h2&#x3E;
+								&#x3C;/header&#x3E;
+								&#x3C;section&#x3E;
+									&#x3C;form action=&#x22;/contato/&#x3C;%- id %&#x3E;?_method=DELETE&#x22; method=&#x22;post&#x22;&#x3E;
+										&#x3C;p&#x3E;&#x3C;label&#x3E;Nome:&#x3C;/label&#x3E;&#x3C;%- contato.nome %&#x3E;&#x3C;/p&#x3E;
+										&#x3C;p&#x3E;&#x3C;label&#x3E;E-mail:&#x3C;/label&#x3E;&#x3C;%- contato.email %&#x3E;&#x3C;/p&#x3E;
+										&#x3C;p&#x3E;
+											&#x3C;button type=&#x22;submit&#x22;&#x3E;Excluir&#x3C;/button&#x3E;
+											&#x3C;a href=&#x22;/contato/&#x3C;%- id %&#x3E;/editar&#x22;&#x3E;Editar&#x3C;/a&#x3E;
+										&#x3C;/p&#x3E;
+									&#x3C;/form&#x3E;
+								&#x3C;/section&#x3E;
+								&#x3C;% include ../exit %&#x3E;
+								&#x3C;% include ../footer %&#x3E;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>PUT e DELETE do HTTP</h2>
+					<p>Infelizmente não temos suporte aos verbos PUT e DELETE no código HTML</p>
+					<pre class="stretch">
+							<code class="line-numbers" data-trim >
+								//Não funciona
+								&#x3C;form action=&#x22;/editar&#x22; method=&#x22;put&#x22;&#x3E;
+								&#x3C;form action=&#x22;/excluir&#x22; method=&#x22;delete&#x22;&#x3E;
+								//Alternativa
+								&#x3C;form action=&#x22;/editar?_method=PUT&#x22; method=&#x22;post&#x22;&#x3E;
+								&#x3C;form action=&#x22;/excluir?_method=DELETE&#x22; method=&#x22;post&#x22;&#x3E;
+							</code>
+						</pre>
+				</section>
+				<section>
+					<h2>Filtros de rotas</h2>
+					<p>E se acessar a rota /contatos sem logar no sistema?</p>
+					<p class="fragment">
+						<img class="stretch" src="images/erro_nao_logado.png"/>
+					</p>
+				</section>
+				<section>
+					<h2>Express não possui filtros explicitos</h2>
+					<p>Mas podemos explorar os recursos de callbacks encadeados</p>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							app.get('/', callback1, callback2, callback3)
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>middleware/autenticador.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+								module.exports = function(req, res, next) {
+									if(!req.session.usuario) {
+										return res.redirect('/');
+									}
+									return next();
+								};
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>routes/contatos.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+								module.exports = function(app) {
+									var autenticar = require('./../middleware/autenticador')
+										, contatos = app.controllers.contatos;
+									app.get('/contatos', autenticar, contatos.index);
+									app.get('/contato/:id', autenticar, contatos.show);
+									app.post('/contato', autenticar, contatos.create);
+									app.get('/contato/:id/editar', autenticar, contatos.edit);
+									app.put('/contato/:id', autenticar, contatos.update);
+									app.delete('/contato/:id', autenticar, contatos.destroy);
+								};
+						</code>
+					</pre>
+				</section>
+				<!--<section>
+					<h2>routes/chat.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+								module.exports = function(app) {
+									var autenticar = require('./../middleware/autenticador')
+									, chat = app.controllers.chat;
+									app.get('/chat/:email', autenticar, chat.index);
+								};
+						</code>
+					</pre>
+					<aside class="notes">
+							Basicamente inserimos o callback autenticar antes da função principal da
+							rota. Isso nos permitiu emular a execução de um filtro before . Caso queira criar
+							um filtro after , não há segredos: apenas coloque o callback do filtro por último.
+							O importante é colocar as funções na ordem lógica de suas execuções.
+					</aside>
+				</section>-->
+				<section>
+					<h2>Suporte a páginas de erro</h2>
+					<p>O express possui duas funções para tratamento de erro: Uma é para tratar do 404 (página não encontrada) e outra é genérica que recebe os detalhes do erro por parâmetro</p>
+				</section>
+				<section>
+						<h2>views/not-found.ejs</h2>
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+									&#x3C;% include header %&#x3E;
+									&#x3C;header&#x3E;
+										&#x3C;h1&#x3E;Ntalk&#x3C;/h1&#x3E;
+										&#x3C;h4&#x3E;Infelizmente essa p&#xE1;gina n&#xE3;o existe :(&#x3C;/h4&#x3E;
+									&#x3C;/header&#x3E;
+									&#x3C;hr&#x3E;
+									&#x3C;p&#x3E;Vamos voltar &#x3C;a href=&#x22;/&#x22;&#x3E;home page?&#x3C;/a&#x3E; :)&#x3C;/p&#x3E;
+									&#x3C;% include footer %&#x3E;	
+							</code>
+						</pre>
+				</section>
+				<section>
+						<h2>views/server-error.ejs</h2>
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+									&#x3C;% include header %&#x3E;
+									&#x3C;header&#x3E;
+										&#x3C;h1&#x3E;Ntalk&#x3C;/h1&#x3E;
+										&#x3C;h4&#x3E;Aconteceu algo terr&#xED;vel! :(&#x3C;/h4&#x3E;
+									&#x3C;/header&#x3E;
+									&#x3C;p&#x3E;
+										Veja os detalhes do erro:
+										&#x3C;br&#x3E;
+										&#x3C;%- error.message %&#x3E;
+									&#x3C;/p&#x3E;
+									&#x3C;hr&#x3E;
+									&#x3C;p&#x3E;Que tal voltar &#x3C;a href=&#x22;/&#x22;&#x3E;home page?&#x3C;/a&#x3E; :)&#x3C;/p&#x3E;
+									&#x3C;% include footer %&#x3E;	
+							</code>
+						</pre>
+				</section>
+				<section>
+						<h2>middleware/error.js</h2>
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+								exports.notFound = function(req, res, next) {
+									res.status(404);
+									res.render('not-found');
+								};
+								exports.serverError = function(error, req, res, next) {
+									res.status(500);
+									res.render('server-error', {error: error});
+								};
+							</code>
+						</pre>
+				</section>
+				<section>
+						<h2>app.js</h2>
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+									var express = require('express')
+									, load = require('consign')
+									, cookieParser = require('cookie-parser')
+									, session = require('express-session')
+									, bodyParser = require('body-parser')
+									, methodOverride = require('method-override')
+									, error = require('./middleware/error')
+									, app = express();
+
+									app.set('views', __dirname + '/views');
+									app.set('view engine', 'ejs');
+									app.use(cookieParser('ntalk'));
+									app.use(session({
+										secret: "abc123",
+										name: 'ntalk',
+										resave: true,
+										saveUninitialized: true
+									}));
+									app.use(bodyParser.urlencoded({extended: true}));
+									app.use(bodyParser.json());
+									app.use(methodOverride('_method'));
+									app.use(express.static(__dirname + '/public'));
+
+									load().include('models')
+									.then('controllers')
+									.then('routes')
+									.into(app);
+
+									// Executa após as rotas se não encontrado
+									app.use(error.notFound);
+									// Executa ao ocorrer um erro
+									app.use(error.serverError);
+
+
+
+									app.listen(3000, function(){
+										console.log("Ntalk no ar.");
+									});
+
+							</code>
+						</pre>
+				</section>
+				<section>
+					<h2>Parte 4</h2>
+					<p>Persistência com banco de dados</p>
+				</section>
+				<section>
+					<h2>Integração com banco de dados</h2>
+					<p>Node é fortemente ligado a BD NoSQL, apesar de ter módulos para BD SQL.</p>
+					<p>Sem entrar no mérito de desempenho, prós e contras na programação. Uma das vantagens dos BD NoSQL é a compatibilidade e suporte oferecido pela própria comunidade</p>
+					<aside class="notes">
+							MongoDB (http://www.mongodb.org) , Redis (http://redis.io/) , Cou-
+							chDB (http://couchdb.apache.org) e RiakJS (http://riakjs.com) . Dos bancos de dados SQL existem alguns módulos para MySQL (http://www.mysql.com) , SQLite
+							(http://www.sqlite.org) e Postgre (http://www.postgresql.org) .
+					</aside>
+				</section>
+				<section >
+					<img style="background-color:rgba(43,44,46,0.95);" class="stretch" src="images/mongodb-logo-white.png"/>
+				</section>
+				<section>
+					<h2>MongoDB</h2>
+					<p>conceito schema-less, ou seja, não existe
+						relacionamentos de tabelas, nem chaves primárias ou estrangeiras e sim documents
+						que possuem embedded documents e tudo mantido dentro de uma collection.</p>
+				</section>
+				<section>
+					<h2>Instalação</h2>
+					<p>
+						Instalar MongoDB Community Edition
+ 						<a href="https://docs.mongodb.com/manual/administration/install-community/" target="_blank">https://docs.mongodb.com/manual/administration/install-community/</a>
+					</p>
+				</section>
+				<section>
+					<h2>Mongoose</h2>
+					<p>mongoose , que é um framework responsável por mapear objetos
+						do Node.js para MongoDB.</p>
+					<p>package.json</p>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							npm install --save mongoose
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>app.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							...
+							var mongoose = require('mongoose');
+							...
+							mongoose.connect('mongodb://localhost/ntalk');
+							global.db = mongoose.connection;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>mongoose.connect()</h2>
+					<p>Como o MongoDB é schema-less, na primeira vez que a aplicação se conecta com o banco através da url
+						'mongodb://localhost/ntalk' automaticamente em run-time é criada uma
+						base de dados com o nome ntalk.</p>
+				</section>
+				<section>
+					<h2>models/usuario.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							module.exports = function(app) {
+								var Schema = require('mongoose').Schema;
+								var contato = Schema({
+									nome: String
+									, email: String
+								});
+								var usuario = Schema({
+									nome: {type: String, required: true}
+									, email: {type: String, required: true
+									, index: {unique: true}}
+									, contatos: [contato]
+								});
+								return db.model('usuarios', usuario);
+							};
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Observações</h2>
+					<p>Repare que foram criados dois objetos usuario e contato , e apenas foi registrado
+						 o modelo usuario , pois contato será um subdocumento de usuario e o
+						registro ocorre via função app.db.model() . Outro detalhe importante: incluímos
+						dois tipos de validações neste modelo, que são: required e unique</p>
+				</section>
+				<section>
+					<h2>Implementando o CRUD</h2>
+					<p>Iniciando pelo controller home na função de login: findOne , que retorna apenas um objeto,
+						e a função select('name email') , que filtra esse objeto retornando um novo
+						objeto contendo apenas os atributos name e email . Com isso, evita-se que seja carregado o subdocumento contatos .</p>
+				</section>
+				<section>
+					<h2>Adicionar os models nos controllers home.js e contatos.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim>
+							var Usuario = app.models.usuario;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>controller/home.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							login: function(req, res) {
+								var query = {email: req.body.usuario.email};
+								Usuario.findOne(query)
+								.select('nome email')
+								.exec(function(erro, usuario){
+									if (usuario) {
+										req.session.usuario = usuario;
+										res.redirect('/contatos');
+									} else {
+										Usuario.create(req.body.usuario, function(erro, usuario) {
+											if(erro){
+												res.redirect('/');
+											} else {
+												req.session.usuario = usuario;
+												res.redirect('/contatos');
+											}
+										});
+									}
+								});
+							},
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>controller/contatos.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							index: function(req, res) {
+								var _id = req.session.usuario._id;
+								Usuario.findById(_id, function(erro, usuario) {
+									var contatos = usuario.contatos;
+									var resultado = { contatos: contatos };
+									res.render('contatos/index', resultado);
+								});
+							},
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>controller/contatos.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							create: function(req, res) {
+								var _id = req.session.usuario._id;
+								Usuario.findById(_id, function(erro, usuario) {
+									var contato = req.body.contato;
+									var contatos = usuario.contatos;
+									contatos.push(contato);
+									usuario.save(function() {
+										res.redirect('/contatos');
+									});
+								});
+							},
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>controller/contatos.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							show: function(req, res) {
+								var _id = req.session.usuario._id;
+								Usuario.findById(_id, function(erro, usuario) {
+									var contatoID = req.params.id;
+									var contato = usuario.contatos.id(contatoID);
+									var resultado = { contato: contato };
+									res.render('contatos/show', resultado);
+								});
+							},
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>controller/contatos.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							edit: function(req, res) {
+								var _id = req.session.usuario._id;
+								Usuario.findById(_id, function(erro, usuario) {
+									var contatoID = req.params.id;
+									var contato = usuario.contatos.id(contatoID);
+									var resultado = { contato: contato };
+									res.render('contatos/edit', resultado);
+								});
+							},
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>controller/contatos.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							update: function(req, res) {
+								var _id = req.session.usuario._id;
+								Usuario.findById(_id, function(erro, usuario) {
+									var contatoID = req.params.id;
+									var contato = usuario.contatos.id(contatoID);
+									contato.nome = req.body.contato.nome;
+									contato.email = req.body.contato.email;
+									usuario.save(function() {
+										res.redirect('/contatos');
+									});
+								});
+							},
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>controller/contatos.js</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							destroy: function(req, res) {
+								var _id = req.session.usuario._id;
+								Usuario.findById(_id, function(erro, usuario) {
+									var contatoID = req.params.id;
+									usuario.contatos.id(contatoID).remove();
+									usuario.save(function() {
+										res.redirect('/contatos');
+									});
+								});
+							}
+							// fim do controller...
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Atualizar as views</h2>
+					<p>Editar as views contatos/edit.ejs
+						e contatos/show.ejs , neles mude apenas a url da action de seus respectivos
+						form , renderizando o atributo contato._id :
+					</p>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							&lt;form action=&quot;/contato/&lt;%- contato._id %&gt;&quot; method=&quot;post&quot;&gt;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Atualizar as views</h2>
+					<p>Em view/contatos/show.ejs</p>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							&lt;a href=&quot;/contato/&lt;%- contato._id %&gt;/editar&quot;&gt;Editar&lt;/a&gt;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Atualizar as views</h2>
+					<p>Em view/contatos/index.ejs</p>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							&lt;a href=&quot;/contato/&lt;%- contato._id %&gt;&quot;&gt;Detalhes&lt;/a&gt;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Dicas para colocar em produção</h2>
+					<p>Para garantir que a aplicação Node esteja disponível, algumas configurações devem ser observadas</p>
+				</section>
+				<section>
+					<h2>Clusters!</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							var cluster = require('cluster'), os = require('os');
+							if (cluster.isMaster) {
+								var cpus = os.cpus().length;
+								for (var i = 0; i < cpus; i++) {
+									cluster.fork();
+								}
+								cluster.on('listening', function(worker) {
+									console.log("Cluster %d conectado", worker.process.pid);
+								});
+								cluster.on('disconnect', function(worker) {
+									console.log('Cluster %d esta desconectado.', worker.process.pid);
+								});
+								cluster.on('exit', function(worker) {
+									console.log('Cluster %d caiu fora.', worker.process.pid);
+								});
+							} else {
+								require('./app');
+							}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Start do servidor</h2>
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							"scripts": {
+								"start": "node clusters",
+								"test": "NODE_ENV=test ./node_modules/mocha/bin/mocha test/*.js"
+							}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Problema Sessões!</h2>
+					<p>As sessões não funcionam com os clusters pois esta utiliza o controle em memória conhecido como MemoryStore. Porém MemoryStore não é compartilhado entre os clusters</p>
+				</section>
+				<section>
+					<h2>Solução: Banco de dados chave-valor REDIS</h2>
+					<p>É nescessário realizar algumas adaptações, para que as sessões sejam armazenadas no Banco de Dados Redis, assim compartilhando as sessões entre os clusters</p>
+				</section>
+				<section>
+					<h2>Logger</h2>
+					<p>Módulo morgan: <a href="https://github.com/expressjs/morgan" target="_blank">https://github.com/expressjs/morgan</a></p>
+				</section>
+				<section>
+					<h2>Manter a aplicação Online em casos de falha</h2>
+					<p>módulo forever-monitor: <a href="https://github.com/foreverjs/forever-monitor" target="_blank">https://github.com/foreverjs/forever-monitor</a></p>
+				</section>
+				<section>
+					<h2>Aumento de performance com NGINX</h2>
+				</section>
+				<section>
+					
+					<pre class="stretch">
+						<code class="line-numbers" data-trim >
+							worker_processes 1;
+							events {
+								worker_connections 1024;
+							}
+							http {
+								include mime.types;
+								default_type application/octet-stream;
+								sendfile on;
+								keepalive_timeout 65;
+								gzip on;
+								server {
+									listen 80;
+									server_name localhost;
+									access_log logs/access.log;
+									location ~ ^/(javascripts|stylesheets|images) {
+										root /ntalk/public;
+										expires max;
+									}
+									location / {
+										proxy_pass http://localhost:3000;
+									}
+								}
+							}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Infraestrutura</h2>
+					<ul>
+						<li>Infraestrutura própia</li>
+						<li>Cloud (AWS, Google Cloud Computing, Azure, Digital Ocean, etc)</li>
+						<li>Hospedagens especializadas</li>
+					</ul>
+				</section>
+				<section>
+					<h2><img src="images/heroku.png" width="20%"></h2>
+					<p>Heroku é uma Plataforma como um serviço (PaaS) que possui suporte para algumas linguagens. </p>
+					<div style="text-align: left; float: left;">
+					<ul>
+						<li>ruby</li>
+						<li><b>nodejs</b></li>
+						<li>python</li>
+						<li>php</li>
+					</ul>
+					</div>
+
+					<div style="text-align: right; float: right;">
+							<h4>based jvm:</h4>
+							<ul>
+								<li>java</li>
+								<li>scala</li>
+								<li>conjure</li>
+							</ul>
+					</div>
+				</section>
+				<section>
+					<h2>Plano gratuito (free)</h2>
+					<ul>
+						<li>Ideal para testes e experimentação</li>
+						<li>Aplicações entram em <i>sleep</i> em 30 min de inatividade</li>
+						<li>De 550 a 1000 horas de free dynos(containers)</li>
+					</ul>
+				</section>
+				<section>
+					<h2><img  src="images/mLab-logo-dark.svg" width="20%" style="background-color: gray"/></h2>
+					<b>mLab</b> é um serviço de banco de dados (Database-as-a-Service) completamente gerenciável para banco de dados MongoDB.
+				</section>
+				<section>
+					<h2>Plano gratuito</h2>
+					<ul>
+						<li>Pequenas base de dados (testes e experimentação)</li>
+						<li>Servidor compartilhado</li>
+						<li>500 MB de armazenamento</li>
+
+					</ul>
+				</section>
+				<section>
+					<h2>Começando pelo BD</h2>
+					<ul>
+						<li>Criar uma conta: <a href="https://mlab.com/signup/" target="_blank">https://mlab.com/signup/</a></li>
+						<li>Criar um novo BD: <i>Create new</i></li>
+						<li>Clicar no BD criado e adicionar usuário: <i>Add database user</i></li>
+					</ul>
+				</section>
+				<section>
+					<img class="stretch" src="images/new_db_mlab.png"/>
+				</section>
+				<section>
+						<img class="stretch" src="images/new_user_mlab.png"/>
+				</section>
+				<section>
+					<h2>Conectar com o mLab</h2>
+						<img class="stretch" src="images/conectar_mlab.png"/>
+				</section>
+				<section>
+					<h2>Plataforma heroku</h2>
+					<ul>
+						<li>Criar uma conta: <a href="https://signup.heroku.com/dc" target="_blank">https://signup.heroku.com/dc</a></li>
+						<li>Instalar o Heroku CLI: <a href="https://devcenter.heroku.com/articles/heroku-cli" target="_blank">https://devcenter.heroku.com/articles/heroku-cli</a></li>
+						
+						<pre class="stretch">
+							<code class="line-numbers" data-trim >
+								$ heroku login
+							</code>
+						</pre>
+					
+					</ul>
+				</section>
+				
+				<section>
+					<h2> Criando um APP heroku</h2>
+					<ul>
+						<li>Em sua dashboard (<a href="https://dashboard.heroku.com/apps" target="_blank">https://dashboard.heroku.com/apps</a>) Crie um novo projeto</li>
+					</ul>
+					<pre class="stretch">
+							<code class="line-numbers" data-trim >
+								$ cd my-project/
+								$ git init
+								$ heroku git:remote -a nomedoprojeto
+								$ git add .
+								$ git commit -am "Iniciando com heroku"
+								$ git push heroku master
+							</code>
+						</pre>
+				</section>
+				
+
+				<section>
+					<h2>Projeto final da disciplina</h2>
+					<p class="fragment">Projeto de tema livre!</p>
+					<p class="fragment">Grupos de 3 a 4 integrantes</p>
+					<p class="fragment">Obrigatório uso do ExpressJS e Mongoose (próxima aula)</p>
+					<p class="fragment">Não será necessário o projeto completo. Basta um crud funcionando completo</p>
+				</section>
+				<section>
+					<h2>Referências</h2>
+					<ul>
+						<li>WILSON, Mike. Construindo Aplicações Node com MngoDB e Backbone. Rio de Janeiro: Editora Novatec, 2013</li>
+						<li>PEREIRA, Caio Ribeiro. Aplicações Web real-time com NodeJS. Casa do Código, 2013, ISBN: 9788566250145</li>
+						<li>FREEMAN, Eric, ROBSON, Elisabeth. Use a cabeça! Programação em HTML5. Editora AltaBooks, 2014, ISBN 9788576088455</li>
+					</ul>
+				</section>
+				<section>
+					<p>Estes slides foram elaborados baseado no livro <b>Node.js - Aplicações web real-time com Node.js</b></p>
+				</section>
+
+
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				slideNumber: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				menu: {
+					// Specifies which side of the presentation the menu will 
+					// be shown. Use 'left' or 'right'.
+					side: 'left',
+
+					// Specifies the width of the menu.
+					// Can be one of the following:
+					// 'normal', 'wide', 'third', 'half', 'full', or
+					// any valid css length value
+					width: 'normal',
+
+					// Add slide numbers to the titles in the slide list.
+					// Use 'true' or format string (same as reveal.js slide numbers)
+					numbers: true,
+
+					// Specifies which slide elements will be used for generating
+					// the slide titles in the menu. The default selects the first
+					// heading element found in the slide, but you can specify any
+					// valid css selector and the text from the first matching
+					// element will be used.
+					// Note: that a section data-menu-title attribute or an element
+					// with a menu-title class will take precedence over this option
+					titleSelector: 'h1, h2, h3, h4, h5, h6',
+
+					// If slides do not have a matching title, attempt to use the
+					// start of the text content as the title instead
+					useTextContentForMissingTitles: false,
+
+					// Hide slides from the menu that do not have a title.
+					// Set to 'true' to only list slides with titles.
+					hideMissingTitles: false,
+
+					// Adds markers to the slide titles to indicate the 
+					// progress through the presentation. Set to 'false'
+					// to hide the markers.
+					markers: true,
+
+					// Specify custom panels to be included in the menu, by
+					// providing an array of objects with 'title', 'icon'
+					// properties, and either a 'src' or 'content' property.
+					custom: false,
+
+					// Specifies the themes that will be available in the themes
+					// menu panel. Set to 'true' to show the themes menu panel
+					// with the default themes list. Alternatively, provide an
+					// array to specify the themes to make available in the
+					// themes menu panel, for example...
+					// [
+					//     { name: 'Black', theme: 'css/theme/black.css' },
+					//     { name: 'White', theme: 'css/theme/white.css' },
+					//     { name: 'League', theme: 'css/theme/league.css' }
+					// ]
+					themes: true,
+
+					// Specifies the path to the default theme files. If your
+					// presentation uses a different path to the standard reveal
+					// layout then you need to provide this option, but only
+					// when 'themes' is set to 'true'. If you provide your own 
+					// list of themes or 'themes' is set to 'false' the 
+					// 'themesPath' option is ignored.
+					themesPath: 'css/theme/',
+
+					// Specifies if the transitions menu panel will be shown.
+					// Set to 'true' to show the transitions menu panel with
+					// the default transitions list. Alternatively, provide an
+					// array to specify the transitions to make available in
+					// the transitions panel, for example...
+					// ['None', 'Fade', 'Slide']
+					transitions: false,
+
+					// Adds a menu button to the slides to open the menu panel.
+					// Set to 'false' to hide the button.
+					openButton: true,
+
+					// If 'true' allows the slide number in the presentation to
+					// open the menu panel. The reveal.js slideNumber option must 
+					// be displayed for this to take effect
+					openSlideNumber: false,
+
+					// If true allows the user to open and navigate the menu using
+					// the keyboard. Standard keyboard interaction with reveal
+					// will be disabled while the menu is open.
+					keyboard: true,
+
+					// Normally the menu will close on user actions such as
+					// selecting a menu item, or clicking the presentation area.
+					// If 'true', the sticky option will leave the menu open
+					// until it is explicitly closed, that is, using the close
+					// button or pressing the ESC or m key (when the keyboard 
+					// interaction option is enabled).
+					sticky: false,
+
+					// If 'true' standard menu items will be automatically opened
+					// when navigating using the keyboard. Note: this only takes 
+					// effect when both the 'keyboard' and 'sticky' options are enabled.
+					autoOpen: true,
+
+					// If 'true' the menu will not be created until it is explicitly
+					// requested by calling RevealMenu.init(). Note this will delay
+					// the creation of all menu panels, including custom panels, and
+					// the menu button.
+					delayInit: false,
+
+					// If 'true' the menu will be shown when the menu is initialised.
+					openOnInit: false,
+
+					// By default the menu will load it's own font-awesome library
+					// icons. If your presentation needs to load a different
+					// font-awesome library the 'loadIcons' option can be set to false
+					// and the menu will not attempt to load the font-awesome library.
+					loadIcons: true
+				},
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'node_modules/reveal.js-menu/menu.js' },
+					{ src: 'plugin/line-numbers/line-numbers.js'}
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
