@@ -408,8 +408,7 @@
 					<h2>Porque utilizar um framework para aplicações Web?</h2>
 					<p class="fragment">
 						Programar utilizando apenas a API HTTP nativa é muito trabalhoso! Conforme
-						surgem necessidades de implementar novas funcionalidades, códigos gigantescos se-
-						riam acrescentados, aumentando a complexidade do projeto e dificultando futuras
+						surgem necessidades de implementar novas funcionalidades, códigos gigantescos seriam acrescentados, aumentando a complexidade do projeto e dificultando futuras
 						manutenções.</p>
 				</section>
 				<section>
@@ -498,15 +497,10 @@
 					<pre>
 							<code class="line-numbers" data-trim >
 								var express = require('express')
-								, load = require('consign')
 								, app = express();
 								app.set('views', __dirname + '/views');
 								app.set('view engine', 'ejs');
 								app.use(express.static(__dirname + '/public'));
-								load().include('models')
-								.then('controllers')
-								.then('routes')
-								.into(app);
 								app.listen(3000, function(){
 									console.log("Ntalk no ar.");
 								});
@@ -564,6 +558,7 @@
 					<h2>Instalação e utilização</h2>
 					<pre>
 						<code class="line-numbers" data-trim >
+							$ npm install --save consign
 							"dependencies": {
 								"consign": "^0.1.6",
 								"ejs": "2.6.1",
