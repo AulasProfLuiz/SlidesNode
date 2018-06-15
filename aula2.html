@@ -70,7 +70,7 @@
 				<section>
 					<h2>Dicas para Desenvolvimento assincrono</h2>
 					<p>
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 								var fs = require('fs');
 								for(var i = 1; i <= 5; i++) {
@@ -85,7 +85,7 @@
 				<section>
 					<h2>Dicas para Desenvolvimento assincrono</h2>
 					<p>
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 								var fs = require('fs');
 								for(var i = 1; i <= 5; i++) {
@@ -118,7 +118,7 @@
 				</section>
 				<section>
 					<h2>Evitar encadeamento de callback</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							var fs = require('fs');
 								fs.readdir(__dirname, function(erro, contents) {
@@ -138,7 +138,7 @@
 				</section>
 				<section>
 						<h2>Melhor legibilidade</h2>
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 									var fs = require('fs');
 									var lerDiretorio = function() {
@@ -203,7 +203,7 @@
 				<section>
 					<h2>hello_server.js</h2>
 					<p>
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 								var http = require('http');
 								var server = http.createServer(function(request, response){
@@ -226,7 +226,7 @@
 				<section>
 					<h2>Lembrando que o Node é assincrono</h2>
 					<p>Por isso é muito utilizado o recurso de callback. Por exemplo podemos adicionar um callback na função <b>server.listen</b></p>
-					<pre class="stretch">
+					<pre>
 							<code class="line-numbers" data-trim >
 									server.listen(3000, function(){
 										console.log('Servidor Hello World rodando!');
@@ -235,7 +235,7 @@
 						</pre>
 				</section>
 				<section>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 								var http = require('http');
 								var atendeRequisicao = function(request, response) {
@@ -259,7 +259,7 @@
 				</section>
 				<section>
 					<h2>hello_server3.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 								var http = require('http');
 								var server = http.createServer(function(request, response){
@@ -290,7 +290,7 @@
 				</section>
 				<section>
 					<h2>url_server.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							const http = require('http');
 							const url = require('url');
@@ -341,7 +341,7 @@
 				</section>
 				<section>
 					<h2>Exemplo para ler um arquivo</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							var fs = require('fs');
 							fs.readFile('/index.html', function(erro, arquivo){
@@ -355,7 +355,7 @@
 				</section>
 				<section>
 					<h2>site_pessoal.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 								var http = require('http');
 								var fs = require('fs');
@@ -376,7 +376,7 @@
 				</section>
 				<section>
 					<h2>index.html</h2>
-					<pre class="stretch">
+					<pre>
 						<code data-trim >
 							&#x3C;html&#x3E;
 								&#x3C;head&#x3E;
@@ -428,7 +428,7 @@
 				</section>
 				<section>
 					<h2>Instalação</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							$ npm install -g express
 							$ express -h
@@ -444,7 +444,7 @@
 					<h2>
 						Criando o esqueleto do projeto
 					</h2>
-					<pre class="stretch">
+					<pre>
 							<code class="line-numbers" data-trim >
 								$ express ntalk --ejs
 								$ cd ntalk
@@ -471,7 +471,7 @@
 					<h2>
 						Atualizando package.json
 					</h2>
-					<pre class="stretch">
+					<pre>
 							<code class="line-numbers" data-trim >
 								{
 									"name": "ntalk",
@@ -495,7 +495,7 @@
 					<h2>
 						app.js simplificado
 					</h2>
-					<pre class="stretch">
+					<pre>
 							<code class="line-numbers" data-trim >
 								var express = require('express')
 								, load = require('consign')
@@ -562,7 +562,7 @@
 				</section>
 				<section>
 					<h2>Instalação e utilização</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							"dependencies": {
 								"consign": "^0.1.6",
@@ -571,7 +571,7 @@
 							  }
 						</code>
 					</pre>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							var load = require('consign');
 							load().include('models')
@@ -587,7 +587,7 @@
 				</section>
 				<section>
 					<h2>routes/home.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 								module.exports = function(app) {
 									var home = app.controllers.home;
@@ -604,7 +604,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>controllers/home.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							module.exports = function(app) {
 								var HomeController = {
@@ -619,7 +619,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>views/home/index.ejs</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							&#x3C;!DOCTYPE html&#x3E;
 							&#x3C;html&#x3E;
@@ -661,7 +661,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>views/header.ejs</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							&#x3C;!DOCTYPE html&#x3E;
 							&#x3C;html&#x3E;
@@ -675,7 +675,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>views/footer.ejs</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 								&#x3C;footer&#x3E;
 									&#x3C;small&#x3E;Ntalk - Agenda de contatos&#x3C;/small&#x3E;
@@ -687,7 +687,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>views/home/index.ejs</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							&#x3C;% include ../header %&#x3E;
 							&#x3C;header&#x3E;
@@ -717,7 +717,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>routes/home.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							module.exports = function(app) {
 								var home = app.controllers.home;
@@ -737,7 +737,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>controller/home.js ... propriedade login</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							login: function(req, res) {
 								var email = req.body.usuario.email
@@ -756,7 +756,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>controller/home.js ... propriedade logout</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							logout: function(req, res) {
 								req.session.destroy();
@@ -779,7 +779,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h1>Instalar modulos adicionais</h1>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							$ npm install --save cookie-parser
 							$ npm install --save express-session
@@ -789,7 +789,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>app.js stack de configurações</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 								var express = require('express')
 								, load = require('consign')
@@ -830,7 +830,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>views/contatos/index.ejs</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 								&#x3C;% include ../header %&#x3E;
 								&#x3C;header&#x3E;
@@ -846,7 +846,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>views/exit.ejs</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							&#x3C;section&#x3E;
 								&#x3C;a href=&#x27;/sair&#x27;&#x3E;Sair&#x3C;/a&#x3E;
@@ -856,7 +856,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>controller/contatos.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 								module.exports = function(app) {
 									var ContatoController = {
@@ -874,7 +874,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>router/contatos.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 								module.exports = function(app) {
 									var contatos = app.controllers.contatos;
@@ -897,7 +897,7 @@ controllers/home.js .
 					<h2>methodOverride</h2>
 					<p>Permite utilizar um mesmo path entre os métodos do HTTP, fazendo uma sobrescrita de métodos</p>
 					<p>
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 								$ npm install --save method-override
 							</code>
@@ -907,7 +907,7 @@ controllers/home.js .
 				<section>
 					<h2>adicinar ao app.js</h2>
 					<p>
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 								...
 								var methodOverride = require('method-override');
@@ -920,7 +920,7 @@ controllers/home.js .
 				<section>
 					<h2>routes/contatos.js</h2>
 					<p>
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 									module.exports = function(app) {
 										var contatos = app.controllers.contatos;
@@ -938,7 +938,7 @@ controllers/home.js .
 				<section>
 					<h2>controller/contatos.js</h2>
 					<p>
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 								module.exports = function(app) {
 									var ContatoController = {
@@ -960,7 +960,7 @@ controllers/home.js .
 				<section>
 					<h2>controller/contatos.js</h2>
 					<p>
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 									create: function(req, res) {
 										var contato = req.body.contato
@@ -976,7 +976,7 @@ controllers/home.js .
 				<section>
 					<h2>controller/contatos.js</h2>
 					<p>
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 									show: function(req, res) {
 										var id = req.params.id
@@ -1001,7 +1001,7 @@ controllers/home.js .
 				<section>
 					<h2>controller/contatos.js</h2>
 					<p>
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 								update: function(req, res) {
 									var contato = req.body.contato
@@ -1017,7 +1017,7 @@ controllers/home.js .
 				<section>
 					<h2>controller/contatos.js</h2>
 					<p>
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 								destroy: function(req, res) {
 									var usuario = req.session.usuario
@@ -1032,7 +1032,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>views/contatos/index.ejs</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 								&#x3C;% include ../header %&#x3E;
 								&#x3C;header&#x3E;
@@ -1074,7 +1074,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>views/contatos/edit.ejs</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 								&#x3C;% include ../header %&#x3E;
 								&#x3C;header&#x3E;
@@ -1098,7 +1098,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>views/contatos/show.ejs</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 								&#x3C;% include ../header %&#x3E;
 								&#x3C;header&#x3E;
@@ -1122,7 +1122,7 @@ controllers/home.js .
 				<section>
 					<h2>PUT e DELETE do HTTP</h2>
 					<p>Infelizmente não temos suporte aos verbos PUT e DELETE no código HTML</p>
-					<pre class="stretch">
+					<pre>
 							<code class="line-numbers" data-trim >
 								//Não funciona
 								&#x3C;form action=&#x22;/editar&#x22; method=&#x22;put&#x22;&#x3E;
@@ -1143,7 +1143,7 @@ controllers/home.js .
 				<section>
 					<h2>Express não possui filtros explicitos</h2>
 					<p>Mas podemos explorar os recursos de callbacks encadeados</p>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							app.get('/', callback1, callback2, callback3)
 						</code>
@@ -1151,7 +1151,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>middleware/autenticador.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 								module.exports = function(req, res, next) {
 									if(!req.session.usuario) {
@@ -1164,7 +1164,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>routes/contatos.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 								module.exports = function(app) {
 									var autenticar = require('./../middleware/autenticador')
@@ -1181,7 +1181,7 @@ controllers/home.js .
 				</section>
 				<!--<section>
 					<h2>routes/chat.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 								module.exports = function(app) {
 									var autenticar = require('./../middleware/autenticador')
@@ -1203,7 +1203,7 @@ controllers/home.js .
 				</section>
 				<section>
 						<h2>views/not-found.ejs</h2>
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 									&#x3C;% include header %&#x3E;
 									&#x3C;header&#x3E;
@@ -1218,7 +1218,7 @@ controllers/home.js .
 				</section>
 				<section>
 						<h2>views/server-error.ejs</h2>
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 									&#x3C;% include header %&#x3E;
 									&#x3C;header&#x3E;
@@ -1238,7 +1238,7 @@ controllers/home.js .
 				</section>
 				<section>
 						<h2>middleware/error.js</h2>
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 								exports.notFound = function(req, res, next) {
 									res.status(404);
@@ -1253,7 +1253,7 @@ controllers/home.js .
 				</section>
 				<section>
 						<h2>app.js</h2>
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 									var express = require('express')
 									, load = require('consign')
@@ -1332,7 +1332,7 @@ controllers/home.js .
 					<p>mongoose , que é um framework responsável por mapear objetos
 						do Node.js para MongoDB.</p>
 					<p>package.json</p>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							npm install --save mongoose
 						</code>
@@ -1340,7 +1340,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>app.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							...
 							var mongoose = require('mongoose');
@@ -1358,7 +1358,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>models/usuario.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							module.exports = function(app) {
 								var Schema = require('mongoose').Schema;
@@ -1392,7 +1392,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>Adicionar os models nos controllers home.js e contatos.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim>
 							var Usuario = app.models.usuario;
 						</code>
@@ -1400,7 +1400,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>controller/home.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							login: function(req, res) {
 								var query = {email: req.body.usuario.email};
@@ -1427,7 +1427,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>controller/contatos.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							index: function(req, res) {
 								var _id = req.session.usuario._id;
@@ -1442,7 +1442,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>controller/contatos.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							create: function(req, res) {
 								var _id = req.session.usuario._id;
@@ -1460,7 +1460,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>controller/contatos.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							show: function(req, res) {
 								var _id = req.session.usuario._id;
@@ -1476,7 +1476,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>controller/contatos.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							edit: function(req, res) {
 								var _id = req.session.usuario._id;
@@ -1492,7 +1492,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>controller/contatos.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							update: function(req, res) {
 								var _id = req.session.usuario._id;
@@ -1511,7 +1511,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>controller/contatos.js</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							destroy: function(req, res) {
 								var _id = req.session.usuario._id;
@@ -1533,7 +1533,7 @@ controllers/home.js .
 						e contatos/show.ejs , neles mude apenas a url da action de seus respectivos
 						form , renderizando o atributo contato._id :
 					</p>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							&lt;form action=&quot;/contato/&lt;%- contato._id %&gt;&quot; method=&quot;post&quot;&gt;
 						</code>
@@ -1542,7 +1542,7 @@ controllers/home.js .
 				<section>
 					<h2>Atualizar as views</h2>
 					<p>Em view/contatos/show.ejs</p>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							&lt;a href=&quot;/contato/&lt;%- contato._id %&gt;/editar&quot;&gt;Editar&lt;/a&gt;
 						</code>
@@ -1551,7 +1551,7 @@ controllers/home.js .
 				<section>
 					<h2>Atualizar as views</h2>
 					<p>Em view/contatos/index.ejs</p>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							&lt;a href=&quot;/contato/&lt;%- contato._id %&gt;&quot;&gt;Detalhes&lt;/a&gt;
 						</code>
@@ -1563,7 +1563,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>Clusters!</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							var cluster = require('cluster'), os = require('os');
 							if (cluster.isMaster) {
@@ -1588,7 +1588,7 @@ controllers/home.js .
 				</section>
 				<section>
 					<h2>Start do servidor</h2>
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							"scripts": {
 								"start": "node clusters",
@@ -1618,7 +1618,7 @@ controllers/home.js .
 				</section>
 				<section>
 					
-					<pre class="stretch">
+					<pre>
 						<code class="line-numbers" data-trim >
 							worker_processes 1;
 							events {
@@ -1720,7 +1720,7 @@ controllers/home.js .
 						<li>Criar uma conta: <a href="https://signup.heroku.com/dc" target="_blank">https://signup.heroku.com/dc</a></li>
 						<li>Instalar o Heroku CLI: <a href="https://devcenter.heroku.com/articles/heroku-cli" target="_blank">https://devcenter.heroku.com/articles/heroku-cli</a></li>
 						
-						<pre class="stretch">
+						<pre>
 							<code class="line-numbers" data-trim >
 								$ heroku login
 							</code>
@@ -1737,7 +1737,7 @@ controllers/home.js .
 							<br/>Crie um novo projeto</li>
 					</ul>
 					<p>(app.js)var port = process.env.PORT || 3000;</p>
-					<pre class="stretch">
+					<pre>
 							<code class="line-numbers" data-trim >
 								$ cd my-project/
 								$ git init
